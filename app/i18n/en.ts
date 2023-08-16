@@ -41,11 +41,11 @@ const en = {
     tapToSignIn: "Tap to sign in!",
     hint: "Hint: you can use any email address and your favorite password :)",
   },
-  demoNavigator: {
-    componentsTab: "Components",
-    debugTab: "Debug",
-    communityTab: "Community",
-    podcastListTab: "Podcast",
+  authNavigator: {
+    firstTab: "1 tab",
+    secondTab: "2 tab",
+    thirdTab: "3 tab",
+    fourthTab: "4 tab",
   },
   demoCommunityScreen: {
     title: "Connect with the community",

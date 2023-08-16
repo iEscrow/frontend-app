@@ -29,7 +29,7 @@ export type DemoTabScreenProps<T extends keyof DemoTabParamList> = CompositeScre
 
 const Tab = createBottomTabNavigator<DemoTabParamList>()
 
-export function DemoNavigator() {
+export function DemoNavigator () {
   const { bottom } = useSafeAreaInsets()
 
   return (
@@ -45,46 +45,46 @@ export function DemoNavigator() {
       }}
     >
       <Tab.Screen
-        name="DemoShowroom"
+        name='DemoShowroom'
         component={DemoShowroomScreen}
         options={{
-          tabBarLabel: translate("demoNavigator.componentsTab"),
+          tabBarLabel: translate("authNavigator.firstTab"),
           tabBarIcon: ({ focused }) => (
-            <Icon icon="components" color={focused && colors.tint} size={30} />
+            <Icon icon='components' color={focused && colors.tint} size={30} />
           ),
         }}
       />
 
       <Tab.Screen
-        name="DemoCommunity"
+        name='DemoCommunity'
         component={DemoCommunityScreen}
         options={{
-          tabBarLabel: translate("demoNavigator.communityTab"),
+          tabBarLabel: translate("authNavigator.secondTab"),
           tabBarIcon: ({ focused }) => (
-            <Icon icon="community" color={focused && colors.tint} size={30} />
+            <Icon icon='community' color={focused && colors.tint} size={30} />
           ),
         }}
       />
 
       <Tab.Screen
-        name="DemoPodcastList"
+        name='DemoPodcastList'
         component={DemoPodcastListScreen}
         options={{
-          tabBarAccessibilityLabel: translate("demoNavigator.podcastListTab"),
-          tabBarLabel: translate("demoNavigator.podcastListTab"),
+          tabBarAccessibilityLabel: translate("authNavigator.thirdTab"),
+          tabBarLabel: translate("authNavigator.thirdTab"),
           tabBarIcon: ({ focused }) => (
-            <Icon icon="podcast" color={focused && colors.tint} size={30} />
+            <Icon icon='podcast' color={focused && colors.tint} size={30} />
           ),
         }}
       />
 
       <Tab.Screen
-        name="DemoDebug"
+        name='DemoDebug'
         component={DemoDebugScreen}
         options={{
-          tabBarLabel: translate("demoNavigator.debugTab"),
+          tabBarLabel: translate("authNavigator.fourthTab"),
           tabBarIcon: ({ focused }) => (
-            <Icon icon="debug" color={focused && colors.tint} size={30} />
+            <Icon icon='debug' color={focused && colors.tint} size={30} />
           ),
         }}
       />
@@ -107,5 +107,3 @@ const $tabBarLabel: TextStyle = {
   lineHeight: 16,
   flex: 1,
 }
-
-// @demo remove-file

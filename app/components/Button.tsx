@@ -18,62 +18,20 @@ export interface ButtonAccessoryProps {
 }
 
 export interface ButtonProps extends PressableProps {
-  /**
-   * Text which is looked up via i18n.
-   */
   tx?: TextProps["tx"]
-  /**
-   * The text to display if not using `tx` or nested components.
-   */
   text?: TextProps["text"]
-  /**
-   * Optional options to pass to i18n. Useful for interpolation
-   * as well as explicitly setting locale or translation fallbacks.
-   */
   txOptions?: TextProps["txOptions"]
-  /**
-   * An optional style override useful for padding & margin.
-   */
   style?: StyleProp<ViewStyle>
-  /**
-   * An optional style override for the "pressed" state.
-   */
   pressedStyle?: StyleProp<ViewStyle>
-  /**
-   * An optional style override for the button text.
-   */
   textStyle?: StyleProp<TextStyle>
-  /**
-   * An optional style override for the button text when in the "pressed" state.
-   */
   pressedTextStyle?: StyleProp<TextStyle>
-  /**
-   * One of the different types of button presets.
-   */
   preset?: Presets
-  /**
-   * An optional component to render on the right side of the text.
-   * Example: `RightAccessory={(props) => <View {...props} />}`
-   */
   RightAccessory?: ComponentType<ButtonAccessoryProps>
-  /**
-   * An optional component to render on the left side of the text.
-   * Example: `LeftAccessory={(props) => <View {...props} />}`
-   */
   LeftAccessory?: ComponentType<ButtonAccessoryProps>
-  /**
-   * Children components.
-   */
   children?: React.ReactNode
 }
 
-/**
- * A component that allows users to take actions and make choices.
- * Wraps the Text component with a Pressable component.
- *
- * - [Documentation and Examples](https://github.com/infinitered/ignite/blob/master/docs/Components-Button.md)
- */
-export function Button(props: ButtonProps) {
+export function Button (props: ButtonProps) {
   const {
     tx,
     text,
@@ -89,14 +47,14 @@ export function Button(props: ButtonProps) {
   } = props
 
   const preset: Presets = $viewPresets[props.preset] ? props.preset : "default"
-  function $viewStyle({ pressed }) {
+  function $viewStyle ({ pressed }) {
     return [
       $viewPresets[preset],
       $viewStyleOverride,
       !!pressed && [$pressedViewPresets[preset], $pressedViewStyleOverride],
     ]
   }
-  function $textStyle({ pressed }) {
+  function $textStyle ({ pressed }) {
     return [
       $textPresets[preset],
       $textStyleOverride,
@@ -105,8 +63,8 @@ export function Button(props: ButtonProps) {
   }
 
   return (
-    <Pressable style={$viewStyle} accessibilityRole="button" {...rest}>
-      {(state) => (
+    <Pressable style={$viewStyle} accessibilityRole='button' {...rest}>
+      {state => (
         <>
           {!!LeftAccessory && <LeftAccessory style={$leftAccessoryStyle} pressableState={state} />}
 
@@ -153,7 +111,7 @@ const $viewPresets = {
     {
       borderWidth: 1,
       borderColor: colors.palette.neutral400,
-      backgroundColor: colors.palette.neutral100,
+      backgroundColor: colors.palette.neutral300,
     },
   ] as StyleProp<ViewStyle>,
 
@@ -161,20 +119,20 @@ const $viewPresets = {
 
   reversed: [
     $baseViewStyle,
-    { backgroundColor: colors.palette.neutral800 },
+    { backgroundColor: colors.palette.neutral600 },
   ] as StyleProp<ViewStyle>,
 }
 
 const $textPresets: Record<Presets, StyleProp<TextStyle>> = {
   default: $baseTextStyle,
   filled: $baseTextStyle,
-  reversed: [$baseTextStyle, { color: colors.palette.neutral100 }],
+  reversed: [$baseTextStyle, { color: colors.palette.neutral300 }],
 }
 
 const $pressedViewPresets: Record<Presets, StyleProp<ViewStyle>> = {
-  default: { backgroundColor: colors.palette.neutral200 },
+  default: { backgroundColor: colors.palette.neutral300 },
   filled: { backgroundColor: colors.palette.neutral400 },
-  reversed: { backgroundColor: colors.palette.neutral700 },
+  reversed: { backgroundColor: colors.palette.neutral600 },
 }
 
 const $pressedTextPresets: Record<Presets, StyleProp<TextStyle>> = {
