@@ -76,4 +76,3 @@ export const DemoIcon: Demo = {
   ],
 }
 
-// @demo remove-file

@@ -7,9 +7,9 @@ import React from "react"
 import { AppRegistry } from "react-native"
 import RNBootSplash from "react-native-bootsplash"
 
-function IgniteApp() {
+function EscrowApp() {
   return <App hideSplashScreen={RNBootSplash.hide} />
 }
 
-AppRegistry.registerComponent("iEscrow", () => IgniteApp)
+AppRegistry.registerComponent("iEscrow", () => EscrowApp)
 export default App

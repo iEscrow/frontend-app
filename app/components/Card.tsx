@@ -115,12 +115,6 @@ interface CardProps extends TouchableOpacityProps {
   FooterComponent?: ReactElement
 }
 
-/**
- * Cards are useful for displaying related information in a contained way.
- * If a ListItem displays content horizontally, a Card can be used to display content vertically.
- *
- * - [Documentation and Examples](https://github.com/infinitered/ignite/blob/master/docs/Components-Card.md)
- */
 export function Card(props: CardProps) {
   const {
     content,

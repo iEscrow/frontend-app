@@ -384,4 +384,3 @@ export const DemoToggle: Demo = {
   ],
 }
 
-// @demo remove-file

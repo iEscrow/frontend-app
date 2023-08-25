@@ -20,12 +20,9 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
   } = useStores()
 
   useEffect(() => {
-    // Here is where you could fetch credentials from keychain or storage
-    // and pre-fill the form fields.
-    setAuthEmail("ignite@infinite.red")
-    setAuthPassword("ign1teIsAwes0m3")
+    setAuthEmail("emiliano@testing.com")
+    setAuthPassword("testing123")
 
-    // Return a "cleanup" function that React will run when the component unmounts
     return () => {
       setAuthPassword("")
       setAuthEmail("")
@@ -40,13 +37,10 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
 
     if (validationError) return
 
-    // Make a request to your server to get an authentication token.
-    // If successful, reset the fields and set the token.
     setIsSubmitted(false)
     setAuthPassword("")
     setAuthEmail("")
 
-    // We'll mock this with a fake token.
     setAuthToken(String(Date.now()))
   }
 
@@ -56,7 +50,7 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
         return (
           <Icon
             icon={isAuthPasswordHidden ? "view" : "hidden"}
-            color={colors.palette.neutral800}
+            color={colors.palette.white}
             containerStyle={props.style}
             size={20}
             onPress={() => setIsAuthPasswordHidden(!isAuthPasswordHidden)}
@@ -66,15 +60,32 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
     [isAuthPasswordHidden],
   )
 
+  const EmailLeftAccessory = () => (
+    <Icon
+      icon={"email"}
+      color={colors.palette.white}
+      style={{ flex: 1, marginLeft: spacing.md }}
+      size={20}
+      onPress={() => setIsAuthPasswordHidden(!isAuthPasswordHidden)}
+    />
+  )
+  const PasswordLeftAccessory = () => (
+    <Icon
+      icon={"lock"}
+      color={colors.palette.white}
+      style={{ flex: 1, marginLeft: spacing.md }}
+      size={20}
+      onPress={() => setIsAuthPasswordHidden(!isAuthPasswordHidden)}
+    />
+  )
+
   return (
     <Screen
       preset="auto"
       contentContainerStyle={$screenContentContainer}
       safeAreaEdges={["top", "bottom"]}
     >
-      <Text testID="login-heading" tx="loginScreen.signIn" preset="heading" style={$signIn} />
-      <Text tx="loginScreen.enterDetails" preset="subheading" style={$enterDetails} />
-      {attemptsCount > 2 && <Text tx="loginScreen.hint" size="sm" weight="light" style={$hint} />}
+      <Text testID="login-heading" tx="loginScreen.signIn" preset="loginHeading" style={$signIn} />
 
       <TextField
         value={authEmail}
@@ -84,11 +95,11 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
         autoComplete="email"
         autoCorrect={false}
         keyboardType="email-address"
-        labelTx="loginScreen.emailFieldLabel"
         placeholderTx="loginScreen.emailFieldPlaceholder"
         helper={error}
         status={error ? "error" : undefined}
         onSubmitEditing={() => authPasswordInput.current?.focus()}
+        LeftAccessory={EmailLeftAccessory}
       />
 
       <TextField
@@ -100,17 +111,46 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
         autoComplete="password"
         autoCorrect={false}
         secureTextEntry={isAuthPasswordHidden}
-        labelTx="loginScreen.passwordFieldLabel"
         placeholderTx="loginScreen.passwordFieldPlaceholder"
         onSubmitEditing={login}
         RightAccessory={PasswordRightAccessory}
+        LeftAccessory={PasswordLeftAccessory}
       />
 
       <Button
         testID="login-button"
         tx="loginScreen.tapToSignIn"
         style={$tapButton}
-        preset="reversed"
+        preset="default"
+        onPress={login}
+      />
+      <Button
+        testID="login-button"
+        tx="loginScreen.tapToSignIn"
+        style={$tapButton}
+        preset="secondary"
+        onPress={login}
+      />
+      <Button
+        testID="login-button"
+        tx="loginScreen.tapToSignIn"
+        style={$tapButton}
+        preset="disabled"
+        onPress={login}
+      />
+
+      <Button
+        testID="login-button"
+        tx="loginScreen.tapToSignIn"
+        style={$tapButton}
+        preset="outline"
+        onPress={login}
+      />
+      <Button
+        testID="login-button"
+        tx="loginScreen.tapToSignIn"
+        style={$tapButton}
+        preset="gradient"
         onPress={login}
       />
     </Screen>
@@ -126,15 +166,6 @@ const $signIn: TextStyle = {
   marginBottom: spacing.sm,
 }
 
-const $enterDetails: TextStyle = {
-  marginBottom: spacing.lg,
-}
-
-const $hint: TextStyle = {
-  color: colors.tint,
-  marginBottom: spacing.md,
-}
-
 const $textField: ViewStyle = {
   marginBottom: spacing.lg,
 }
@@ -142,5 +173,3 @@ const $textField: ViewStyle = {
 const $tapButton: ViewStyle = {
   marginTop: spacing.xs,
 }
-
-// @demo remove-file

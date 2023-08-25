@@ -10,7 +10,7 @@ import {
   ScrollViewProps,
   StyleProp,
   View,
-  ViewStyle,
+  ViewStyle,ImageBackground,useColorScheme 
 } from "react-native"
 import { colors } from "../theme"
 import { ExtendedEdge, useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle"
@@ -194,13 +194,14 @@ export function Screen(props: ScreenProps) {
     keyboardOffset = 0,
     safeAreaEdges,
     StatusBarProps,
-    statusBarStyle = "dark",
+    statusBarStyle = "light",
   } = props
-
+  const colorScheme = useColorScheme();
   const $containerInsets = useSafeAreaInsetsStyle(safeAreaEdges)
-
+  const $backgroundImage = {dark: require("../../assets/images/background-dark.png"), light: require("../../assets/images/background-light.png")}
   return (
     <View style={[$containerStyle, { backgroundColor }, $containerInsets]}>
+      <ImageBackground source={colorScheme === "dark" ? $backgroundImage.dark : $backgroundImage.light} resizeMode="cover" style={$bgStyle}>
       <StatusBar style={statusBarStyle} {...StatusBarProps} />
 
       <KeyboardAvoidingView
@@ -214,7 +215,8 @@ export function Screen(props: ScreenProps) {
         ) : (
           <ScreenWithScrolling {...props} />
         )}
-      </KeyboardAvoidingView>
+        </KeyboardAvoidingView>
+        </ImageBackground>
     </View>
   )
 }
@@ -238,4 +240,9 @@ const $outerStyle: ViewStyle = {
 const $innerStyle: ViewStyle = {
   justifyContent: "flex-start",
   alignItems: "stretch",
+}
+
+const $bgStyle: ViewStyle = {
+  flex: 1,
+  justifyContent: 'center',
 }

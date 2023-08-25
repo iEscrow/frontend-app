@@ -21,26 +21,7 @@ function iterate(obj, stack, array) {
   return array
 }
 
-/**
- * This tests your codebase for missing i18n strings so you can avoid error strings at render time
- *
- * It was taken from https://gist.github.com/Michaelvilleneuve/8808ba2775536665d95b7577c9d8d5a1
- * and modified slightly to account for our Ignite higher order components,
- * which take 'tx' and 'fooTx' props.
- * The grep command is nasty looking, but it's essentially searching the codebase for a few different things:
- *
- * tx="*"
- * Tx=""
- * tx={""}
- * Tx={""}
- * translate(""
- *
- * and then grabs the i18n key between the double quotes
- *
- * This approach isn't 100% perfect. If you are storing your key string in a variable because you
- * are setting it conditionally, then it won't be picked up.
- *
- */
+
 
 describe("i18n", () => {
   test("There are no missing keys", (done) => {

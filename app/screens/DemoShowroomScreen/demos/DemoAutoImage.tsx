@@ -207,4 +207,3 @@ export const DemoAutoImage: Demo = {
   ],
 }
 
-// @demo remove-file

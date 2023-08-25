@@ -1,22 +1,17 @@
-/**
- * This Api class lets you define an API endpoint and methods to request
- * data and process it.
- *
- * See the [Backend API Integration](https://github.com/infinitered/ignite/blob/master/docs/Backend-API-Integration.md)
- * documentation for more details.
- */
 import {
-  ApiResponse, // @demo remove-current-line
+  ApiResponse, 
   ApisauceInstance,
   create,
 } from "apisauce"
 import Config from "../../config"
-import { GeneralApiProblem, getGeneralApiProblem } from "./apiProblem" // @demo remove-current-line
+import { GeneralApiProblem, getGeneralApiProblem } from "./apiProblem"
+
 import type {
   ApiConfig,
-  ApiFeedResponse, // @demo remove-current-line
+  ApiFeedResponse, 
 } from "./api.types"
-import type { EpisodeSnapshotIn } from "../../models/Episode" // @demo remove-current-line
+import type { EpisodeSnapshotIn } from "../../models/Episode"
+
 
 /**
  * Configuring the apisauce instance.
@@ -48,7 +43,7 @@ export class Api {
     })
   }
 
-  // @demo remove-block-start
+
   /**
    * Gets a list of recent React Native Radio episodes.
    */
@@ -81,7 +76,7 @@ export class Api {
       return { kind: "bad-data" }
     }
   }
-  // @demo remove-block-end
+
 }
 
 // Singleton instance of the API for convenience

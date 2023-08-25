@@ -151,12 +151,7 @@ interface ToggleInputProps {
   checkboxIcon?: CheckboxToggleProps["checkboxIcon"]
 }
 
-/**
- * Renders a boolean input.
- * This is a controlled component that requires an onValueChange callback that updates the value prop in order for the component to reflect user actions. If the value prop is not updated, the component will continue to render the supplied value prop instead of the expected result of any user actions.
- *
- * - [Documentation and Examples](https://github.com/infinitered/ignite/blob/master/docs/Components-Toggle.md)
- */
+
 export function Toggle(props: ToggleProps) {
   const {
     variant = "checkbox",

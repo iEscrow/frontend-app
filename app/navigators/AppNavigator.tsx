@@ -8,7 +8,7 @@ import {
   DarkTheme,
   DefaultTheme,
   NavigationContainer,
-  NavigatorScreenParams, // @demo remove-current-line
+  NavigatorScreenParams,
 } from "@react-navigation/native"
 import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navigation/native-stack"
 import { observer } from "mobx-react-lite"
@@ -16,8 +16,8 @@ import React from "react"
 import { useColorScheme } from "react-native"
 import * as Screens from "app/screens"
 import Config from "../config"
-import { useStores } from "../models" // @demo remove-current-line
-import { DemoNavigator, DemoTabParamList } from "./DemoNavigator" // @demo remove-current-line
+import { useStores } from "../models" 
+import { DemoNavigator, DemoTabParamList } from "./DemoNavigator" 
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
 import { colors } from "app/theme"
 
@@ -36,10 +36,8 @@ import { colors } from "app/theme"
  */
 export type AppStackParamList = {
   Welcome: undefined
-  Login: undefined // @demo remove-current-line
-  Demo: NavigatorScreenParams<DemoTabParamList> // @demo remove-current-line
-  // 🔥 Your screens go here
-  // IGNITE_GENERATOR_ANCHOR_APP_STACK_PARAM_LIST
+  Login: undefined 
+  Demo: NavigatorScreenParams<DemoTabParamList> 
 }
 
 /**
@@ -57,23 +55,17 @@ export type AppStackScreenProps<T extends keyof AppStackParamList> = NativeStack
 const Stack = createNativeStackNavigator<AppStackParamList>()
 
 const AppStack = observer(function AppStack() {
-  // @demo remove-block-start
   const {
     authenticationStore: { isAuthenticated },
   } = useStores()
 
-  // @demo remove-block-end
   return (
     <Stack.Navigator
-      screenOptions={{ headerShown: false, navigationBarColor: colors.background }}
-      initialRouteName={isAuthenticated ? "Welcome" : "Login"} // @demo remove-current-line
+      screenOptions={{ headerShown: false, navigationBarColor: colors.bottomTabs.background }}
+      initialRouteName={isAuthenticated ? "Demo" : "Login"}
     >
-      {/* @demo remove-block-start */}
       {isAuthenticated ? (
         <>
-          {/* @demo remove-block-end */}
-          <Stack.Screen name="Welcome" component={Screens.WelcomeScreen} />
-          {/* @demo remove-block-start */}
           <Stack.Screen name="Demo" component={DemoNavigator} />
         </>
       ) : (
@@ -81,9 +73,7 @@ const AppStack = observer(function AppStack() {
           <Stack.Screen name="Login" component={Screens.LoginScreen} />
         </>
       )}
-      {/* @demo remove-block-end */}
-      {/** 🔥 Your screens go here */}
-      {/* IGNITE_GENERATOR_ANCHOR_APP_STACK_SCREENS */}
+      {/** other screens */}
     </Stack.Navigator>
   )
 })

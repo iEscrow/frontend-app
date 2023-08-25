@@ -96,11 +96,7 @@ interface ListItemActionProps {
   side: "left" | "right"
 }
 
-/**
- * A styled row component that can be used in FlatList, SectionList, or by itself.
- *
- * - [Documentation and Examples](https://github.com/infinitered/ignite/blob/master/docs/Components-ListItem.md)
- */
+
 export function ListItem(props: ListItemProps) {
   const {
     bottomSeparator,

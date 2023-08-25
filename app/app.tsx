@@ -38,7 +38,6 @@ const config = {
     Login: {
       path: "",
     },
-    Welcome: "welcome",
     Demo: {
       screens: {
         DemoShowroom: {

@@ -116,4 +116,3 @@ export const DemoHeader: Demo = {
   ],
 }
 
-// @demo remove-file

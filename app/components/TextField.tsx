@@ -1,4 +1,4 @@
-import React, { ComponentType, forwardRef, Ref, useImperativeHandle, useRef } from "react"
+import React, { ComponentType, forwardRef, Ref, useImperativeHandle, useRef,useState } from "react"
 import {
   StyleProp,
   TextInput,
@@ -97,11 +97,7 @@ export interface TextFieldProps extends Omit<TextInputProps, "ref"> {
   LeftAccessory?: ComponentType<TextFieldAccessoryProps>
 }
 
-/**
- * A component that allows for the entering and editing of text.
- *
- * - [Documentation and Examples](https://github.com/infinitered/ignite/blob/master/docs/Components-TextField.md)
- */
+
 export const TextField = forwardRef(function TextField(props: TextFieldProps, ref: Ref<TextInput>) {
   const {
     labelTx,
@@ -126,7 +122,7 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
   const input = useRef<TextInput>()
 
   const disabled = TextInputProps.editable === false || status === "disabled"
-
+  const [isFocused, setIsFocused] = useState(false);
   const placeholderContent = placeholderTx
     ? translate(placeholderTx, placeholderTxOptions)
     : placeholder
@@ -141,6 +137,7 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
     TextInputProps.multiline && { minHeight: 112 },
     LeftAccessory && { paddingStart: 0 },
     RightAccessory && { paddingEnd: 0 },
+    isFocused && {backgroundColor: colors.palette.inputBackgroundFocus, borderColor: colors.palette.primary400},
     $inputWrapperStyleOverride,
   ]
 
@@ -160,10 +157,8 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
 
   function focusInput() {
     if (disabled) return
-
     input.current?.focus()
   }
-
   useImperativeHandle(ref, () => input.current)
 
   return (
@@ -200,9 +195,12 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
           textAlignVertical="top"
           placeholder={placeholderContent}
           placeholderTextColor={colors.textDim}
+          
           {...TextInputProps}
           editable={!disabled}
           style={$inputStyles}
+          onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
         />
 
         {!!RightAccessory && (
@@ -236,22 +234,22 @@ const $labelStyle: TextStyle = {
 const $inputWrapperStyle: ViewStyle = {
   flexDirection: "row",
   alignItems: "flex-start",
-  borderWidth: 1,
-  borderRadius: 4,
-  backgroundColor: colors.palette.neutral200,
-  borderColor: colors.palette.neutral400,
+  borderWidth: 3,
+  borderRadius: 10,
+  backgroundColor: colors.palette.inputBackground,
+  borderColor: colors.palette.inputBackground,
   overflow: "hidden",
 }
 
 const $inputStyle: TextStyle = {
   flex: 1,
   alignSelf: "stretch",
-  fontFamily: typography.primary.normal,
+  fontFamily: typography.primary.medium,
   color: colors.text,
-  fontSize: 16,
-  height: 24,
-  // https://github.com/facebook/react-native/issues/21720#issuecomment-532642093
-  paddingVertical: 0,
+  fontSize: typography.sizes.h3,
+  lineHeight: 34,
+  height: 34,
+  paddingTop: 0,
   paddingHorizontal: 0,
   marginVertical: spacing.xs,
   marginHorizontal: spacing.sm,
@@ -262,13 +260,14 @@ const $helperStyle: TextStyle = {
 }
 
 const $rightAccessoryStyle: ViewStyle = {
-  marginEnd: spacing.xs,
-  height: 40,
+  marginEnd: spacing.md,
+  marginTop: spacing.xs,
+  height: 34,
   justifyContent: "center",
   alignItems: "center",
 }
 const $leftAccessoryStyle: ViewStyle = {
-  marginStart: spacing.xs,
+  marginStart: spacing.md,
   height: 40,
   justifyContent: "center",
   alignItems: "center",

@@ -163,5 +163,3 @@ export const DemoCard: Demo = {
     </DemoUseCase>,
   ],
 }
-
-// @demo remove-file

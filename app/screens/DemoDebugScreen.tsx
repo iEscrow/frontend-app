@@ -41,11 +41,7 @@ export const DemoDebugScreen: FC<DemoTabScreenProps<"DemoDebug">> = function Dem
 
   return (
     <Screen preset="scroll" safeAreaEdges={["top"]} contentContainerStyle={$container}>
-      <Text
-        style={$reportBugsLink}
-        tx="demoDebugScreen.reportBugs"
-        onPress={() => openLinkInBrowser("https://github.com/infinitered/ignite/issues")}
-      />
+      
       <Text style={$title} preset="heading" tx="demoDebugScreen.title" />
       <View style={$itemsContainer}>
         <ListItem
@@ -139,4 +135,3 @@ const $hint: TextStyle = {
   paddingBottom: spacing.lg,
 }
 
-// @demo remove-file

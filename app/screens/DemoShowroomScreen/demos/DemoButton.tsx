@@ -138,5 +138,3 @@ export const DemoButton: Demo = {
     </DemoUseCase>,
   ],
 }
-
-// @demo remove-file

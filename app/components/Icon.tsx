@@ -42,14 +42,11 @@ interface IconProps extends TouchableOpacityProps {
    * An optional function to be called when the icon is pressed
    */
   onPress?: TouchableOpacityProps["onPress"]
+
+  gradient?: boolean 
 }
 
-/**
- * A component to render a registered icon.
- * It is wrapped in a <TouchableOpacity /> if `onPress` is provided, otherwise a <View />.
- *
- * - [Documentation and Examples](https://github.com/infinitered/ignite/blob/master/docs/Components-Icon.md)
- */
+
 export function Icon(props: IconProps) {
   const {
     icon,
@@ -94,6 +91,7 @@ export const iconRegistry = {
   community: require("../../assets/icons/community.png"),
   components: require("../../assets/icons/components.png"),
   debug: require("../../assets/icons/debug.png"),
+  email: require("../../assets/icons/email.png"),
   github: require("../../assets/icons/github.png"),
   heart: require("../../assets/icons/heart.png"),
   hidden: require("../../assets/icons/hidden.png"),
@@ -107,6 +105,13 @@ export const iconRegistry = {
   slack: require("../../assets/icons/slack.png"),
   view: require("../../assets/icons/view.png"),
   x: require("../../assets/icons/x.png"),
+  marketplace: require('../../assets/icons/marketplace.png'),
+  marketplaceActive: require('../../assets/icons/marketplace-active.png'),
+  createEscrow: require('../../assets/icons/create-escrow.png'),
+  createEscrowActive: require('../../assets/icons/create-escrow-active.png'),
+  myEscrows: require('../../assets/icons/my-escrows.png'),
+  myEscrowsActive: require('../../assets/icons/my-escrows-active.png'),
+  dropdown: require("../../assets/icons/dropdown-arrow.png")
 }
 
 const $imageStyle: ImageStyle = {

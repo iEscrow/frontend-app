@@ -20,7 +20,9 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "userInterfaceStyle": "automatic",
     "android": {
+      "userInterfaceStyle": "automatic",
       "icon": "./assets/images/app-icon-android-legacy.png",
       "package": "com.iescrow",
       "adaptiveIcon": {
@@ -34,6 +36,7 @@
       }
     },
     "ios": {
+      "userInterfaceStyle": "automatic",
       "icon": "./assets/images/app-icon-ios.png",
       "supportsTablet": true,
       "bundleIdentifier": "com.iescrow",

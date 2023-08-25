@@ -143,4 +143,3 @@ export const DemoText: Demo = {
   ],
 }
 
-// @demo remove-file

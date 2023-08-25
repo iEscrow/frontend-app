@@ -1,6 +1,9 @@
 // TODO: write documentation for colors and palette in own markdown file and add links from here
 
 const palette = {
+  white: "#FFFFFF",
+  black: "#000000",
+
   neutral300: "#EAE9E9",
   neutral400: "#d5d5d5",
   neutral500: "#BFBFBF",
@@ -18,19 +21,26 @@ const palette = {
   accent500: "#39D6C5",
   accent600: "#7FECAA",
 
-  backdrop: "rgba(0,0,0,0.4)",
+  backdrop: "rgba(0,0,0,0.25)",
 
   text: "#3D3D3D",
   success: "#6EB7A0",
   error: "#E85A69",
   info: "#F3AA64",
   disabled: "#E4E4E4",
-  background: "#F4F4F4",
+  background: "#171717",
+
+  inputBackground: "#2D2D2D",
+  inputBackgroundFocus: "#4C4C4C",
 
   gradientBlue: ["#063E67", "#1B80A4"],
   gradientDarlBlue: ["#063E67", "#02284A"],
   gradientGreen: ["#30C2E2", "#39D6C5", "#7FECAA"],
   gradientSalmon: ["#EC886A", "#F5C6B7"],
+  bottomTabsBackground: "#121212",
+
+  btn2: "#414141"
+
 } as const
 
 export const colors = {
@@ -38,9 +48,9 @@ export const colors = {
 
   transparent: "rgba(0, 0, 0, 0)",
 
-  text: palette.text,
+  text: palette.white,
 
-  textDim: palette.neutral600,
+  textDim: palette.neutral500,
 
   background: palette.background,
 
@@ -53,4 +63,8 @@ export const colors = {
   error: palette.error,
 
   errorBackground: palette.error,
+bottomTabs: {
+  background: palette.bottomTabsBackground
+}
+
 }

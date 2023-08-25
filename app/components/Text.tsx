@@ -44,12 +44,7 @@ export interface TextProps extends RNTextProps {
   children?: React.ReactNode
 }
 
-/**
- * For your text displaying needs.
- * This component is a HOC over the built-in React Native one.
- *
- * - [Documentation and Examples](https://github.com/infinitered/ignite/blob/master/docs/Components-Text.md)
- */
+
 export function Text(props: TextProps) {
   const { weight, size, tx, txOptions, text, children, style: $styleOverride, ...rest } = props
 
@@ -80,6 +75,7 @@ const $sizeStyles = {
   sm: { fontSize: 16, lineHeight: 24 } satisfies TextStyle,
   xs: { fontSize: 14, lineHeight: 21 } satisfies TextStyle,
   xxs: { fontSize: 12, lineHeight: 18 } satisfies TextStyle,
+  h3: {fontSize: 18, lineHeight: 22.5} satisfies TextStyle,
 }
 
 const $fontWeightStyles = Object.entries(typography.primary).reduce((acc, [weight, fontFamily]) => {
@@ -95,6 +91,8 @@ const $baseStyle: StyleProp<TextStyle> = [
 const $presets = {
   default: $baseStyle,
 
+  loginHeading: [$baseStyle, $fontWeightStyles.medium, {fontSize: typography.sizes.h2, textAlign: "center" }] as StyleProp<TextStyle>,
+
   bold: [$baseStyle, $fontWeightStyles.bold] as StyleProp<TextStyle>,
 
   heading: [$baseStyle, $sizeStyles.xxl, $fontWeightStyles.bold] as StyleProp<TextStyle>,
@@ -104,6 +102,8 @@ const $presets = {
   formLabel: [$baseStyle, $fontWeightStyles.medium] as StyleProp<TextStyle>,
 
   formHelper: [$baseStyle, $sizeStyles.sm, $fontWeightStyles.normal] as StyleProp<TextStyle>,
+  h3: [$baseStyle, $sizeStyles.h3, $fontWeightStyles.medium],
+
 }
 
 const $rtlStyle: TextStyle = isRTL ? { writingDirection: "rtl" } : {}

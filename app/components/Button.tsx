@@ -43,6 +43,7 @@ export function Button (props: ButtonProps) {
     children,
     RightAccessory,
     LeftAccessory,
+    
     ...rest
   } = props
 
@@ -82,24 +83,26 @@ export function Button (props: ButtonProps) {
 }
 
 const $baseViewStyle: ViewStyle = {
-  minHeight: 56,
-  borderRadius: 4,
+  minHeight: 40,
+  minWidth: 140,
+  borderRadius: 20,
   justifyContent: "center",
   alignItems: "center",
   flexDirection: "row",
-  paddingVertical: spacing.sm,
-  paddingHorizontal: spacing.sm,
+  paddingVertical: typography.sizes.overline,
+  paddingHorizontal: 20,
   overflow: "hidden",
 }
 
 const $baseTextStyle: TextStyle = {
-  fontSize: 16,
-  lineHeight: 20,
-  fontFamily: typography.primary.medium,
+  fontSize: typography.sizes.btn1,
+  lineHeight: 27,
+  fontFamily: typography.primary.semiBold,
   textAlign: "center",
   flexShrink: 1,
   flexGrow: 0,
   zIndex: 2,
+  color: colors.palette.white
 }
 
 const $rightAccessoryStyle: ViewStyle = { marginStart: spacing.xs, zIndex: 1 }
@@ -109,34 +112,82 @@ const $viewPresets = {
   default: [
     $baseViewStyle,
     {
-      borderWidth: 1,
-      borderColor: colors.palette.neutral400,
-      backgroundColor: colors.palette.neutral300,
+      
+      backgroundColor: colors.palette.accent500,
+    },
+  ] as StyleProp<ViewStyle>,
+  disabled: [
+    $baseViewStyle,
+    {
+      backgroundColor: colors.palette.neutral500,
+    },
+  ] as StyleProp<ViewStyle>,
+  secondary: [
+    $baseViewStyle,
+    {
+      backgroundColor: colors.palette.primary600,
+    },
+  ] as StyleProp<ViewStyle>,
+  createEscrow: [
+    $baseViewStyle,
+    {
+      backgroundColor: colors.palette.primary600,
+      borderWidth: 2,
+      borderColor: "red"
+    },
+  ] as StyleProp<ViewStyle>,
+  outline: [
+    $baseViewStyle,
+    {
+      backgroundColor: colors.transparent,
+      borderWidth: 2,
+      borderColor: colors.palette.accent400
+    },
+  ] as StyleProp<ViewStyle>,
+  gradient: [
+    $baseViewStyle,
+    {
+      backgroundColor: colors.transparent,
     },
   ] as StyleProp<ViewStyle>,
 
-  filled: [$baseViewStyle, { backgroundColor: colors.palette.neutral300 }] as StyleProp<ViewStyle>,
+  filled: [$baseViewStyle, { backgroundColor: colors.palette.primary400 }] as StyleProp<ViewStyle>,
 
   reversed: [
     $baseViewStyle,
-    { backgroundColor: colors.palette.neutral600 },
+    { backgroundColor: colors.palette.primary400 },
   ] as StyleProp<ViewStyle>,
 }
 
 const $textPresets: Record<Presets, StyleProp<TextStyle>> = {
-  default: $baseTextStyle,
-  filled: $baseTextStyle,
-  reversed: [$baseTextStyle, { color: colors.palette.neutral300 }],
+  default: [$baseTextStyle,],
+  disabled: [$baseTextStyle,],
+  secondary: [$baseTextStyle,],
+  createEscrow: [$baseTextStyle, {fontSize: typography.sizes.btn2}],
+  filled: [$baseTextStyle,],
+  reversed: [$baseTextStyle, { color: colors.palette.black }],
+  outline: [$baseTextStyle],
+  gradient: [$baseTextStyle, { color: colors.palette.primary600 }],
 }
 
 const $pressedViewPresets: Record<Presets, StyleProp<ViewStyle>> = {
-  default: { backgroundColor: colors.palette.neutral300 },
-  filled: { backgroundColor: colors.palette.neutral400 },
-  reversed: { backgroundColor: colors.palette.neutral600 },
+  default: { backgroundColor: colors.palette.accent600 },
+  disabled: { backgroundColor: colors.palette.neutral400 },
+  secondary: { backgroundColor: colors.palette.primary500 },
+  createEscrow: { backgroundColor: colors.palette.primary500 },
+  filled: { backgroundColor: colors.palette.primary600 },
+  reversed: { backgroundColor: colors.palette.primary600 },
+  outline: { backgroundColor: colors.transparent, borderColor: colors.palette.accent600 },
+  gradient: { backgroundColor: colors.palette.backdrop },
 }
 
 const $pressedTextPresets: Record<Presets, StyleProp<TextStyle>> = {
   default: { opacity: 0.9 },
+  disabled: { opacity: 0.9 },
+  secondary: { opacity: 0.9 },
+  createEscrow: { opacity: 0.9 },
   filled: { opacity: 0.9 },
   reversed: { opacity: 0.9 },
+  outline: { opacity: 0.9 },
+  gradient: { opacity: 0.9 },
 }
