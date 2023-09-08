@@ -255,13 +255,13 @@ function Checkbox(props: ToggleInputProps) {
   const offBackgroundColor = [
     disabled && colors.palette.neutral400,
     status === "error" && colors.errorBackground,
-    colors.palette.neutral200,
+    colors.palette.accent400,
   ].filter(Boolean)[0]
 
   const outerBorderColor = [
     disabled && colors.palette.neutral400,
     status === "error" && colors.error,
-    !on && colors.palette.neutral800,
+    !on && colors.palette.accent600,
     colors.palette.secondary500,
   ].filter(Boolean)[0]
 
@@ -274,7 +274,7 @@ function Checkbox(props: ToggleInputProps) {
   const iconTintColor = [
     disabled && colors.palette.neutral600,
     status === "error" && colors.error,
-    colors.palette.accent100,
+    colors.palette.accent400,
   ].filter(Boolean)[0]
 
   return (
@@ -315,26 +315,26 @@ function Radio(props: ToggleInputProps) {
   const offBackgroundColor = [
     disabled && colors.palette.neutral400,
     status === "error" && colors.errorBackground,
-    colors.palette.neutral200,
+    colors.transparent,
   ].filter(Boolean)[0]
 
   const outerBorderColor = [
     disabled && colors.palette.neutral400,
     status === "error" && colors.error,
-    !on && colors.palette.neutral800,
-    colors.palette.secondary500,
+    !on && colors.palette.white,
+    colors.palette.white,
   ].filter(Boolean)[0]
 
   const onBackgroundColor = [
     disabled && colors.transparent,
     status === "error" && colors.errorBackground,
-    colors.palette.neutral100,
+    colors.transparent,
   ].filter(Boolean)[0]
 
   const dotBackgroundColor = [
     disabled && colors.palette.neutral600,
     status === "error" && colors.error,
-    colors.palette.secondary500,
+    colors.palette.primary400,
   ].filter(Boolean)[0]
 
   return (
@@ -546,8 +546,8 @@ const $inputWrapper: ViewStyle = {
 }
 
 const $inputOuterBase: ViewStyle = {
-  height: 24,
-  width: 24,
+  height: 16,
+  width: 16,
   borderWidth: 2,
   alignItems: "center",
   overflow: "hidden",
@@ -578,16 +578,17 @@ const $checkboxDetail: ImageStyle = {
 }
 
 const $radioInner: ViewStyle = {
-  width: "100%",
-  height: "100%",
+  width: 16,
+  height: 16,
   alignItems: "center",
   justifyContent: "center",
   overflow: "hidden",
+  marginLeft: -2
 }
 
 const $radioDetail: ViewStyle = {
-  width: 12,
-  height: 12,
+  width: 16,
+  height: 16,
   borderRadius: 6,
 }
 

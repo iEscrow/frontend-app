@@ -39,7 +39,8 @@ const palette = {
   gradientSalmon: ["#EC886A", "#F5C6B7"],
   bottomTabsBackground: "#121212",
 
-  btn2: "#414141"
+  btn2: "#414141",
+  lineGray: "#373737"
 
 } as const
 

@@ -13,13 +13,14 @@ import {
 } from "react-native"
 import { DrawerLayout, DrawerState } from "react-native-gesture-handler"
 import { useSharedValue, withTiming } from "react-native-reanimated"
-import { ListItem, Screen, Text } from "../../components"
+import { Icon, ListItem, Screen, Text } from "../../components"
 import { isRTL } from "../../i18n"
 import { DemoTabParamList, DemoTabScreenProps } from "../../navigators/DemoNavigator"
 import { colors, spacing } from "../../theme"
 import { useSafeAreaInsetsStyle } from "../../utils/useSafeAreaInsetsStyle"
 import * as Demos from "./demos"
 import { DrawerIconButton } from "./DrawerIconButton"
+import CustomDrawerContent from "app/components/CustomDrawerContent"
 
 const logo = require("../../../assets/images/logo.png")
 
@@ -35,7 +36,7 @@ interface DemoListItem {
   handleScroll?: (sectionIndex: number, itemIndex?: number) => void
 }
 
-const slugify = str =>
+const slugify = (str) =>
   str
     .toLowerCase()
     .trim()
@@ -49,9 +50,9 @@ const WebListItem: FC<DemoListItem> = ({ item, sectionIndex }) => {
   return (
     <View>
       <Link to={`/showroom/${sectionSlug}`} style={$menuContainer}>
-        <Text preset='bold'>{item.name}</Text>
+        <Text preset="bold">{item.name}</Text>
       </Link>
-      {item.useCases.map(u => {
+      {item.useCases.map((u) => {
         const itemSlug = slugify(u)
 
         return (
@@ -67,7 +68,7 @@ const WebListItem: FC<DemoListItem> = ({ item, sectionIndex }) => {
 const NativeListItem: FC<DemoListItem> = ({ item, sectionIndex, handleScroll }) => {
   return (
     <View>
-      <Text onPress={() => handleScroll(sectionIndex)} preset='bold' style={$menuContainer}>
+      <Text onPress={() => handleScroll(sectionIndex)} preset="bold" style={$menuContainer}>
         {item.name}
       </Text>
       {item.useCases.map((u, index) => (
@@ -85,10 +86,11 @@ const NativeListItem: FC<DemoListItem> = ({ item, sectionIndex, handleScroll }) 
 const ShowroomListItem = Platform.select({ web: WebListItem, default: NativeListItem })
 
 export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
-  function DemoShowroomScreen (_props) {
+  function DemoShowroomScreen(_props) {
+    const { navigation } = _props
     const [open, setOpen] = useState(false)
     const timeout = useRef<ReturnType<typeof setTimeout>>()
-    const drawerRef = useRef<DrawerLayout>()
+    const drawerRef = useRef()
     const listRef = useRef<SectionList>()
     const menuRef = useRef<FlatList>()
     const progress = useSharedValue(0)
@@ -100,14 +102,14 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
       if (route.params) {
         const demoValues = Object.values(Demos)
         const findSectionIndex = demoValues.findIndex(
-          x => x.name.toLowerCase() === params.queryIndex,
+          (x) => x.name.toLowerCase() === params.queryIndex,
         )
         let findItemIndex = 0
         if (params.itemIndex) {
           try {
             findItemIndex =
               demoValues[findSectionIndex].data.findIndex(
-                u => slugify(u.props.name) === params.itemIndex,
+                (u) => slugify(u.props.name) === params.itemIndex,
               ) + 1
           } catch (err) {
             console.error(err)
@@ -120,10 +122,10 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
     const toggleDrawer = () => {
       if (!open) {
         setOpen(true)
-        drawerRef.current?.openDrawer({ speed: 2 })
+        navigation.openDrawer()
       } else {
         setOpen(false)
-        drawerRef.current?.closeDrawer({ speed: 2 })
+        navigation.closeDrawer()
       }
     }
 
@@ -160,73 +162,33 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
     const $drawerInsets = useSafeAreaInsetsStyle(["top"])
 
     return (
-      <DrawerLayout
-        ref={drawerRef}
-        drawerWidth={Platform.select({ default: 326, web: Dimensions.get("window").width * 0.3 })}
-        drawerType={"slide"}
-        drawerPosition={isRTL ? "right" : "left"}
-        overlayColor={open ? colors.palette.backdrop : "transparent"}
-        onDrawerSlide={drawerProgress => {
-          progress.value = open ? 1 - drawerProgress : drawerProgress
-        }}
-        onDrawerStateChanged={(newState: DrawerState, drawerWillShow: boolean) => {
-          if (newState === "Settling") {
-            progress.value = withTiming(drawerWillShow ? 1 : 0, {
-              duration: 250,
-            })
-            setOpen(drawerWillShow)
-          }
-        }}
-        renderNavigationView={() => (
-          <View style={[$drawer, $drawerInsets]}>
-            <View style={$logoContainer}>
-              <Image source={logo} style={$logoImage} />
+      <Screen preset="fixed" safeAreaEdges={["top"]} contentContainerStyle={$screenContainer}>
+        
+        <SectionList
+          ref={listRef}
+          contentContainerStyle={$sectionListContentContainer}
+          stickySectionHeadersEnabled={false}
+          sections={Object.values(Demos)}
+          renderItem={({ item }) => item}
+          renderSectionFooter={() => <View style={$demoUseCasesSpacer} />}
+          ListHeaderComponent={
+            <View style={$heading}>
+              <Text preset="heading" tx="demoShowroomScreen.jumpStart" />
             </View>
-
-            <FlatList<{ name: string; useCases: string[] }>
-              ref={menuRef}
-              contentContainerStyle={$flatListContentContainer}
-              data={Object.values(Demos).map(d => ({
-                name: d.name,
-                useCases: d.data.map(u => u.props.name),
-              }))}
-              keyExtractor={item => item.name}
-              renderItem={({ item, index: sectionIndex }) => (
-                <ShowroomListItem {...{ item, sectionIndex, handleScroll }} />
-              )}
-            />
-          </View>
-        )}
-      >
-        <Screen preset='fixed' safeAreaEdges={["top"]} contentContainerStyle={$screenContainer}>
-          <DrawerIconButton onPress={toggleDrawer} {...{ open, progress }} />
-
-          <SectionList
-            ref={listRef}
-            contentContainerStyle={$sectionListContentContainer}
-            stickySectionHeadersEnabled={false}
-            sections={Object.values(Demos)}
-            renderItem={({ item }) => item}
-            renderSectionFooter={() => <View style={$demoUseCasesSpacer} />}
-            ListHeaderComponent={
-              <View style={$heading}>
-                <Text preset='heading' tx='demoShowroomScreen.jumpStart' />
+          }
+          onScrollToIndexFailed={scrollToIndexFailed}
+          renderSectionHeader={({ section }) => {
+            return (
+              <View>
+                <Text preset="heading" style={$demoItemName}>
+                  {section.name}
+                </Text>
+                <Text style={$demoItemDescription}>{section.description}</Text>
               </View>
-            }
-            onScrollToIndexFailed={scrollToIndexFailed}
-            renderSectionHeader={({ section }) => {
-              return (
-                <View>
-                  <Text preset='heading' style={$demoItemName}>
-                    {section.name}
-                  </Text>
-                  <Text style={$demoItemDescription}>{section.description}</Text>
-                </View>
-              )
-            }}
-          />
-        </Screen>
-      </DrawerLayout>
+            )
+          }}
+        />
+      </Screen>
     )
   }
 
@@ -280,4 +242,3 @@ const $demoItemDescription: TextStyle = {
 const $demoUseCasesSpacer: ViewStyle = {
   paddingBottom: spacing.xxl,
 }
-

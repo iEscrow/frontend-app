@@ -8,13 +8,15 @@ import { translate } from "../i18n"
 import { DemoShowroomScreen, DemoDebugScreen, CreateEscrowScreen } from "../screens"
 import { colors, typography } from "../theme"
 import { AppStackParamList, AppStackScreenProps } from "./AppNavigator"
+import * as Screens from "app/screens"
 
 export type DemoTabParamList = {
-  DemoCommunity: undefined
-  DemoShowroom: { queryIndex?: string; itemIndex?: string }
-  DemoDebug: undefined
-  DemoPodcastList: undefined
+  Marketplace: undefined
+  CreateEscrow:undefined
+  CreateEscrow2:undefined
+  MyEscrows: undefined
 }
+
 
 /**
  * Helper for automatically generating navigation prop types for each route.
@@ -44,8 +46,8 @@ export function DemoNavigator() {
       }}
     >
       <Tab.Screen
-        name="DemoShowroom"
-        component={DemoShowroomScreen}
+        name="Marketplace"
+        component={Screens.MarketplaceScreen}
         options={{
           tabBarLabel: ({ focused }) => (
             <Text
@@ -65,8 +67,8 @@ export function DemoNavigator() {
       />
 
       <Tab.Screen
-        name="DemoPodcastList"
-        component={CreateEscrowScreen}
+        name="CreateEscrow"
+        component={Screens.CreateEscrowScreen}
         options={{
           tabBarAccessibilityLabel: translate("authNavigator.thirdTab"),
           tabBarLabel: ({ focused }) => (
@@ -87,8 +89,8 @@ export function DemoNavigator() {
       />
 
       <Tab.Screen
-        name="DemoDebug"
-        component={DemoDebugScreen}
+        name="MyEscrows"
+        component={Screens.MyEscrowsScreen}
         options={{
           tabBarLabel: ({ focused }) => (
             <Text
@@ -113,11 +115,10 @@ export function DemoNavigator() {
 const $tabBar: ViewStyle = {
   backgroundColor: colors.bottomTabs.background,
   borderTopColor: colors.transparent,
-  
 }
 
 const $tabBarItem: ViewStyle = {
- marginBottom: -15
+  marginBottom: -15,
 }
 
 const $tabBarLabel: TextStyle = {
@@ -136,5 +137,6 @@ const $tabBarLabelActive: TextStyle = {
 }
 
 const $tabBarIcon: ImageStyle = {
-  marginTop: -10
+  marginTop: -10,
+  
 }

@@ -16,11 +16,14 @@ import React from "react"
 import { useColorScheme } from "react-native"
 import * as Screens from "app/screens"
 import Config from "../config"
-import { useStores } from "../models" 
-import { DemoNavigator, DemoTabParamList } from "./DemoNavigator" 
+import { useStores } from "../models"
+import { DemoNavigator, DemoTabParamList } from "./DemoNavigator"
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
 import { colors } from "app/theme"
-
+import { createDrawerNavigator } from "@react-navigation/drawer"
+import CustomDrawerContent from "app/components/CustomDrawerContent"
+import { View } from "react-native"
+import { Icon } from "app/components"
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
  * as well as what properties (if any) they might take when navigating to them.
@@ -35,9 +38,9 @@ import { colors } from "app/theme"
  *   https://reactnavigation.org/docs/typescript/#organizing-types
  */
 export type AppStackParamList = {
-  Welcome: undefined
-  Login: undefined 
-  Demo: NavigatorScreenParams<DemoTabParamList> 
+  Marketplace: undefined
+  CreateEscrow: undefined
+  MyEscrows: NavigatorScreenParams<DemoTabParamList>
 }
 
 /**
@@ -52,31 +55,92 @@ export type AppStackScreenProps<T extends keyof AppStackParamList> = NativeStack
 >
 
 // Documentation: https://reactnavigation.org/docs/stack-navigator/
-const Stack = createNativeStackNavigator<AppStackParamList>()
+const Drawer = createDrawerNavigator()
 
 const AppStack = observer(function AppStack() {
   const {
     authenticationStore: { isAuthenticated },
   } = useStores()
-
+  const defaultOptions = ({ navigation }) => ({
+    headerShown: true,
+    headerTitle: "",
+    headerTintColor: colors.palette.white,
+    headerTransparent: true,
+    headerLeft: false,
+    headerRight: () => (
+      <View
+        style={{
+          flexDirection: "row",
+          gap: 20,
+          alignItems: "center",
+          paddingRight: 16,
+          paddingTop: 16,
+          shadowColor: "#000",
+          shadowOffset: {
+            width: 0,
+            height: 2,
+          },
+          shadowOpacity: 0.23,
+          shadowRadius: 2.62,
+          elevation: 4,
+        }}
+      >
+        <Icon icon="notifications" size={24} onPress={() => console.log("notifications")} color="white" />
+        <Icon icon="profile" size={44} onPress={navigation.openDrawer} />
+      </View>
+    ),
+    navigationBarColor: colors.bottomTabs.background,
+  })
   return (
-    <Stack.Navigator
-      screenOptions={{ headerShown: false, navigationBarColor: colors.bottomTabs.background }}
-      initialRouteName={isAuthenticated ? "Demo" : "Login"}
+    <Drawer.Navigator
+      screenOptions={defaultOptions}
+      initialRouteName={isAuthenticated ? "BottomsTabs" : "Login"}
+      drawerContent={CustomDrawerContent}
     >
       {isAuthenticated ? (
         <>
-          <Stack.Screen name="Demo" component={DemoNavigator} />
+          <Drawer.Screen name="BottomsTabs" component={DemoNavigator} />
+          <Drawer.Screen name="Profile" component={Screens.CreateEscrowScreen} />
+          <Drawer.Screen name="Help" component={Screens.CreateEscrowScreen} />
+          <Drawer.Screen name="FAQ’s" component={Screens.CreateEscrowScreen} />
+          <Drawer.Screen name="Referrals" component={Screens.CreateEscrowScreen} />
+          <Drawer.Screen name="CreateEscrow2" component={Screens.CreateEscrow2Screen} />
         </>
       ) : (
         <>
-          <Stack.Screen name="Login" component={Screens.LoginScreen} />
+          <Drawer.Screen
+            name="Login"
+            component={Screens.LoginScreen}
+            options={{ headerShown: false }}
+          />
         </>
       )}
       {/** other screens */}
-    </Stack.Navigator>
+    </Drawer.Navigator>
   )
 })
+
+{
+  /* <Drawer.Navigator
+      screenOptions={{ headerShown: false, navigationBarColor: colors.bottomTabs.background }}
+      initialRouteName={isAuthenticated ? "CreateEscrow" : "Login"}
+      drawerContent={CustomDrawerContent}
+    >
+      {isAuthenticated ? (
+        <>
+          <Drawer.Screen name="CreateEscrow" component={Screens.CreateEscrowScreen} />
+          <Drawer.Screen name="Profile" component={DemoNavigator} />
+          <Drawer.Screen name="Help" component={Screens.CreateEscrowScreen} />
+          <Drawer.Screen name="FAQ’s" component={Screens.CreateEscrowScreen} />
+          <Drawer.Screen name="Referrals" component={Screens.CreateEscrowScreen} />
+        </>
+      ) : (
+        <>
+          <Drawer.Screen name="Login" component={Screens.LoginScreen} />
+        </>
+      )}
+    </Drawer.Navigator> */
+}
 
 export interface NavigationProps
   extends Partial<React.ComponentProps<typeof NavigationContainer>> {}

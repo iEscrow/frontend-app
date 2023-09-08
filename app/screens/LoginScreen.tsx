@@ -1,10 +1,20 @@
 import { observer } from "mobx-react-lite"
 import React, { FC, useEffect, useMemo, useRef, useState } from "react"
-import { TextInput, TextStyle, ViewStyle } from "react-native"
-import { Button, Icon, Screen, Text, TextField, TextFieldAccessoryProps } from "../components"
+import { Dimensions, ImageStyle, TextInput, TextStyle, ViewStyle } from "react-native"
+import {
+  AutoImage,
+  Button,
+  Icon,
+  Screen,
+  Text,
+  TextField,
+  TextFieldAccessoryProps,
+} from "../components"
 import { useStores } from "../models"
 import { AppStackScreenProps } from "../navigators"
 import { colors, spacing } from "../theme"
+
+const { width } = Dimensions.get("screen")
 
 interface LoginScreenProps extends AppStackScreenProps<"Login"> {}
 
@@ -64,7 +74,7 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
     <Icon
       icon={"email"}
       color={colors.palette.white}
-      style={{ flex: 1, marginLeft: spacing.md }}
+      style={$inputIcon}
       size={20}
       onPress={() => setIsAuthPasswordHidden(!isAuthPasswordHidden)}
     />
@@ -73,7 +83,7 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
     <Icon
       icon={"lock"}
       color={colors.palette.white}
-      style={{ flex: 1, marginLeft: spacing.md }}
+      style={$inputIcon}
       size={20}
       onPress={() => setIsAuthPasswordHidden(!isAuthPasswordHidden)}
     />
@@ -85,6 +95,8 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
       contentContainerStyle={$screenContentContainer}
       safeAreaEdges={["top", "bottom"]}
     >
+      <AutoImage source={require("../../assets/images/logo.png")} style={$logo} />
+
       <Text testID="login-heading" tx="loginScreen.signIn" preset="loginHeading" style={$signIn} />
 
       <TextField
@@ -124,7 +136,7 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
         preset="default"
         onPress={login}
       />
-      <Button
+      {/* <Button
         testID="login-button"
         tx="loginScreen.tapToSignIn"
         style={$tapButton}
@@ -145,14 +157,7 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
         style={$tapButton}
         preset="outline"
         onPress={login}
-      />
-      <Button
-        testID="login-button"
-        tx="loginScreen.tapToSignIn"
-        style={$tapButton}
-        preset="gradient"
-        onPress={login}
-      />
+      /> */}
     </Screen>
   )
 })
@@ -163,7 +168,8 @@ const $screenContentContainer: ViewStyle = {
 }
 
 const $signIn: TextStyle = {
-  marginBottom: spacing.sm,
+  marginBottom: spacing.lg,
+  lineHeight: 30
 }
 
 const $textField: ViewStyle = {
@@ -172,4 +178,18 @@ const $textField: ViewStyle = {
 
 const $tapButton: ViewStyle = {
   marginTop: spacing.xs,
+
+}
+
+const $logo: ImageStyle = {
+  width: (width * 140) / 360,
+  height: (width * 61) / 360,
+  marginLeft: "auto",
+  marginRight: "auto",
+  marginBottom: spacing.xxl,
+  marginTop: spacing.lg
+}
+const $inputIcon: ImageStyle = {
+  flex: 1,
+  marginLeft: spacing.md,
 }

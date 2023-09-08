@@ -11,7 +11,7 @@
     "splash": {
       "image": "./assets/images/splash-logo-all.png",
       "resizeMode": "contain",
-      "backgroundColor": "#3D3D3D"
+      "backgroundColor": "#121212"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -32,7 +32,7 @@
       "splash": {
         "image": "./assets/images/splash-logo-android-universal.png",
         "resizeMode": "contain",
-        "backgroundColor": "#3D3D3D"
+        "backgroundColor": "#121212"
       }
     },
     "ios": {
@@ -44,7 +44,7 @@
         "image": "./assets/images/splash-logo-ios-mobile.png",
         "tabletImage": "./assets/images/splash-logo-ios-tablet.png",
         "resizeMode": "contain",
-        "backgroundColor": "#3D3D3D"
+        "backgroundColor": "#121212"
       }
     },
     "web": {
@@ -52,7 +52,7 @@
       "splash": {
         "image": "./assets/images/splash-logo-web.png",
         "resizeMode": "contain",
-        "backgroundColor": "#3D3D3D"
+        "backgroundColor": "#121212"
       }
     },
     "plugins": [

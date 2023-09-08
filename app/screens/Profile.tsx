@@ -5,35 +5,21 @@ import { DemoTabScreenProps } from "../navigators/DemoNavigator"
 import { colors, spacing, typography } from "../theme"
 import { translate } from "../i18n"
 import SelectDropdown from "react-native-select-dropdown"
-import { TouchableOpacity } from "react-native-gesture-handler"
 
-const coins = ["USDT", "ETC", "BTC", "BNB"]
-const options = ["Mercado Pago", "Transferencia bancaria"]
+const countries = ["USDT", "ETC", "BTC", "BNB"]
 const { width } = Dimensions.get("screen")
 
-export const CreateEscrowScreen: FC<DemoTabScreenProps<"DemoDebug">> = function CreateEscrowScreen(
+export const ProfileScreen: FC<DemoTabScreenProps<"Profile">> = function ProfileScreen(
   _props,
 ) {
-  const [escrowPrivate, setPrivate] = React.useState(false)
-  const [escrowPublic, setPublic] = React.useState(true)
-  const {navigation} = _props
-  const checkPrivate = () => {
-    setPrivate(true)
-    setPublic(false)
-  }
-  const checkPublic = () => {
-    setPrivate(false)
-    setPublic(true)
-  }
-
+  const [value, setValue] = React.useState(false)
   return (
     <Screen preset="scroll" safeAreaEdges={["top"]} contentContainerStyle={$container}>
-    
       <AutoImage source={require("../../assets/images/logo.png")} style={$logo} />
       <View style={$itemsContainer}>
         <Text tx="createEscrow.send" preset="h3" style={$title} />
         <SelectDropdown
-          data={coins}
+          data={countries}
           defaultButtonText={translate("createEscrow.sendDropdownPlaceholder")}
           buttonTextStyle={$dropdownText}
           buttonStyle={$dropdownButton}
@@ -52,7 +38,7 @@ export const CreateEscrowScreen: FC<DemoTabScreenProps<"DemoDebug">> = function 
         />
         <Text tx="createEscrow.recieve" preset="h3" style={$title} />
         <SelectDropdown
-          data={options}
+          data={countries}
           defaultButtonText={translate("createEscrow.sendDropdownPlaceholder")}
           buttonTextStyle={$dropdownText}
           buttonStyle={$dropdownButton}
@@ -73,9 +59,9 @@ export const CreateEscrowScreen: FC<DemoTabScreenProps<"DemoDebug">> = function 
       <View style={[$dividerContainer, { marginBottom: spacing.xl }]}>
         <View style={$divider} />
       </View>
-      <View style={{paddingHorizontal: spacing.xl, gap: spacing.lg}}>
-        <TouchableOpacity style={{flexDirection: "row", gap: spacing.md}}  onPress={checkPrivate}>
-          <Toggle variant="radio" value={escrowPrivate} containerStyle={{marginTop: 4}} />
+      <View style={{paddingHorizontal: spacing.xl}}>
+        <View style={{flexDirection: "row", gap: spacing.md}}>
+          <Toggle variant="radio" value={value} onPress={() => setValue(!value)} />
           <View>
             <Text text="PRIVADO" size="h3" weight="medium"  />
             <Text
@@ -83,33 +69,21 @@ export const CreateEscrowScreen: FC<DemoTabScreenProps<"DemoDebug">> = function 
 No figurará en el Marketplace"
             />
           </View>
-        </TouchableOpacity>
-        <TouchableOpacity style={{flexDirection: "row", gap: spacing.md}} onPress={checkPublic}>
-          <Toggle variant="radio" value={escrowPublic} containerStyle={{marginTop: 4}}  />
-          <View>
-            <Text text="PRIVADO" size="h3" weight="medium"  />
-            <Text
-              text="Ya tengo la contraparte.
-No figurará en el Marketplace"
-            />
-          </View>
-        </TouchableOpacity>
+        </View>
       </View>
       <View style={[$dividerContainer, { marginTop: spacing.xl }]}>
         <View style={$divider} />
       </View>
       <View style={{ alignItems: "center", marginTop: spacing.xl }}>
-        <Button text="SIGUIENTE" preset="filled" onPress={()=> navigation.navigate("CreateEscrow2")} />
+        <Button text="SIGUIENTE" preset="filled" />
       </View>
     </Screen>
   )
 }
 
 const $container: ViewStyle = {
-
+  paddingTop: spacing.lg + spacing.xl,
   paddingBottom: spacing.xxl,
-  paddingTop: spacing.xxl,
-  
 }
 const $dividerContainer: ViewStyle = {
   paddingHorizontal: spacing.md,
@@ -151,7 +125,6 @@ const $dropdownButton: ViewStyle = {
 }
 
 const $logo: ImageStyle = {
-  marginTop: spacing.lg ,
   width: (width * 140) / 360,
   height: (width * 61) / 360,
   marginLeft: "auto",

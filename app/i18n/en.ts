@@ -3,6 +3,7 @@ const en = {
     ok: "OK!",
     cancel: "Cancel",
     back: "Back",
+    logOut: "Logout",
   },
   welcomeScreen: {
     postscript:
@@ -27,31 +28,27 @@ const en = {
     signIn: "Login screen",
     tapToSignIn: "Login",
     emailFieldPlaceholder: "Email",
-    passwordFieldPlaceholder: "Password"
+    passwordFieldPlaceholder: "Password",
   },
   demoShowroomScreen: {
     jumpStart: "Demo componentes",
   },
   demoCommunityScreen: {
-title: "Comunidad"
-
+    title: "Comunidad",
   },
   demoDebugScreen: {
-title: "Perfil demo"
-
+    title: "Perfil demo",
   },
   createEscrow: {
     send: "Send",
     sendDropdownPlaceholder: "Press to select an option",
     recieve: "Recieve",
-
   },
   authNavigator: {
     firstTab: "Marketplace",
     secondTab: "Create escrow",
     thirdTab: "My escrows",
-  }
-  
+  },
 }
 
 export default en

@@ -27,9 +27,9 @@ export function DemoDivider(props: DemoDividerProps) {
           style={[
             $line,
             type === "horizontal" && {
-              width: 150,
+              width: "150%",
               height: 1,
-              marginStart: -75,
+              marginStart: "-75%",
               marginTop: -1,
             },
             type === "vertical" && {

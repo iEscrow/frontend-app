@@ -111,7 +111,12 @@ export const iconRegistry = {
   createEscrowActive: require('../../assets/icons/create-escrow-active.png'),
   myEscrows: require('../../assets/icons/my-escrows.png'),
   myEscrowsActive: require('../../assets/icons/my-escrows-active.png'),
-  dropdown: require("../../assets/icons/dropdown-arrow.png")
+  dropdown: require("../../assets/icons/dropdown-arrow.png"),
+  profile: require("../../assets/icons/profile.png"),
+  details: require("../../assets/icons/details.png"),
+  create: require("../../assets/icons/create.png"),
+  alert: require("../../assets/icons/alert.png"),
+  notifications: require("../../assets/icons/notifications.png"),
 }
 
 const $imageStyle: ImageStyle = {

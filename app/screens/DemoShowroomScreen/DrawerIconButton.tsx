@@ -70,9 +70,9 @@ export function DrawerIconButton(props: DrawerIconButtonProps) {
     }
   })
 
-  useEffect(() => {
+  /* useEffect(() => {
     progress.value = withSpring(open ? 1 : 0)
-  }, [open, progress])
+  }, [open, progress]) */
 
   return (
     <AnimatedPressable {...PressableProps} style={[$container, animatedContainerStyles]}>
