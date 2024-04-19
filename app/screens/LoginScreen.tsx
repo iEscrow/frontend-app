@@ -13,6 +13,7 @@ import {
 import { useStores } from "../models"
 import { AppStackScreenProps } from "../navigators"
 import { colors, spacing } from "../theme"
+import { api } from "app/services/api"
 
 const { width } = Dimensions.get("screen")
 
@@ -21,17 +22,24 @@ interface LoginScreenProps extends AppStackScreenProps<"Login"> {}
 export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_props) {
   const authPasswordInput = useRef<TextInput>()
 
-  const [authPassword, setAuthPassword] = useState("")
   const [isAuthPasswordHidden, setIsAuthPasswordHidden] = useState(true)
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [attemptsCount, setAttemptsCount] = useState(0)
   const {
-    authenticationStore: { authEmail, setAuthEmail, setAuthToken, validationError },
+    authenticationStore: {
+      authEmail,
+      setAuthEmail,
+      authPassword,
+      setAuthPassword,
+      setAuthToken,
+      validationEmailError,
+      validationPasswordError,
+    },
   } = useStores()
 
   useEffect(() => {
-    setAuthEmail("emiliano@testing.com")
-    setAuthPassword("testing123")
+    /* setAuthEmail("emiliano@testing.com")
+    setAuthPassword("testing123") */
 
     return () => {
       setAuthPassword("")
@@ -39,19 +47,23 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
     }
   }, [])
 
-  const error = isSubmitted ? validationError : ""
+  const emailError = isSubmitted ? validationEmailError : ""
+  const passwordError = isSubmitted ? validationPasswordError : ""
 
   function login() {
     setIsSubmitted(true)
     setAttemptsCount(attemptsCount + 1)
+    if (validationEmailError || validationPasswordError) return
 
-    if (validationError) return
-
-    setIsSubmitted(false)
-    setAuthPassword("")
-    setAuthEmail("")
-
-    setAuthToken(String(Date.now()))
+    api
+      .login({ username: authEmail, password: authPassword })
+      .then((response) => {
+        console.log("response", response)
+        setAuthToken(response.data.token)
+        setAuthEmail(response.data.user.email)
+        setIsSubmitted(false)
+      })
+      .catch((error) => console.error(error))
   }
 
   const PasswordRightAccessory = useMemo(
@@ -104,12 +116,12 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
         onChangeText={setAuthEmail}
         containerStyle={$textField}
         autoCapitalize="none"
-        autoComplete="email"
+        autoComplete="username"
         autoCorrect={false}
-        keyboardType="email-address"
-        placeholderTx="loginScreen.emailFieldPlaceholder"
-        helper={error}
-        status={error ? "error" : undefined}
+        keyboardType="default"
+        placeholderTx="loginScreen.usernameFieldPlaceholder"
+        helper={isSubmitted ? validationEmailError : ""}
+        status={emailError ? "error" : undefined}
         onSubmitEditing={() => authPasswordInput.current?.focus()}
         LeftAccessory={EmailLeftAccessory}
       />
@@ -124,7 +136,8 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
         autoCorrect={false}
         secureTextEntry={isAuthPasswordHidden}
         placeholderTx="loginScreen.passwordFieldPlaceholder"
-        onSubmitEditing={login}
+        helper={isSubmitted ? validationPasswordError : ""}
+        status={passwordError ? "error" : undefined}
         RightAccessory={PasswordRightAccessory}
         LeftAccessory={PasswordLeftAccessory}
       />
@@ -169,7 +182,7 @@ const $screenContentContainer: ViewStyle = {
 
 const $signIn: TextStyle = {
   marginBottom: spacing.lg,
-  lineHeight: 30
+  lineHeight: 30,
 }
 
 const $textField: ViewStyle = {
@@ -178,7 +191,6 @@ const $textField: ViewStyle = {
 
 const $tapButton: ViewStyle = {
   marginTop: spacing.xs,
-
 }
 
 const $logo: ImageStyle = {
@@ -187,7 +199,7 @@ const $logo: ImageStyle = {
   marginLeft: "auto",
   marginRight: "auto",
   marginBottom: spacing.xxl,
-  marginTop: spacing.lg
+  marginTop: spacing.lg,
 }
 const $inputIcon: ImageStyle = {
   flex: 1,

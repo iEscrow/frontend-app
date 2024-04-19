@@ -74,8 +74,8 @@ export const CreateEscrowScreen: FC<DemoTabScreenProps<"DemoDebug">> = function 
         <View style={$divider} />
       </View>
       <View style={{paddingHorizontal: spacing.xl, gap: spacing.lg}}>
-        <TouchableOpacity style={{flexDirection: "row", gap: spacing.md}}  onPress={checkPrivate}>
-          <Toggle variant="radio" value={escrowPrivate} containerStyle={{marginTop: 4}} />
+        <TouchableOpacity style={{flexDirection: "row", gap: spacing.md}}  onPress={checkPublic}>
+          <Toggle variant="radio" value={escrowPublic} containerStyle={{marginTop: 4}} />
           <View>
             <Text text="PRIVADO" size="h3" weight="medium"  />
             <Text
@@ -84,8 +84,8 @@ No figurará en el Marketplace"
             />
           </View>
         </TouchableOpacity>
-        <TouchableOpacity style={{flexDirection: "row", gap: spacing.md}} onPress={checkPublic}>
-          <Toggle variant="radio" value={escrowPublic} containerStyle={{marginTop: 4}}  />
+        <TouchableOpacity style={{flexDirection: "row", gap: spacing.md}} onPress={checkPrivate}>
+          <Toggle variant="radio" value={escrowPrivate} containerStyle={{marginTop: 4}}  />
           <View>
             <Text text="PRIVADO" size="h3" weight="medium"  />
             <Text
@@ -98,8 +98,10 @@ No figurará en el Marketplace"
       <View style={[$dividerContainer, { marginTop: spacing.xl }]}>
         <View style={$divider} />
       </View>
-      <View style={{ alignItems: "center", marginTop: spacing.xl }}>
-        <Button text="SIGUIENTE" preset="filled" onPress={()=> navigation.navigate("CreateEscrow2")} />
+      <View style={{ alignItems: "center", marginTop: spacing.md }}>
+        <Button text="SIGUIENTE" preset="filled" onPress={() => navigation.navigate("CreateEscrow2", {
+          isPrivate: escrowPrivate
+        })} style={{paddingVertical: 8}} />
       </View>
     </Screen>
   )

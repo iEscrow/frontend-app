@@ -1,17 +1,18 @@
 import React from "react"
-import { DrawerContentScrollView, DrawerItem, DrawerItemList } from "@react-navigation/drawer"
-import { Linking, Touchable, ViewStyle, ImageStyle, TextStyle , View, Image } from "react-native"
+import { ViewStyle, ImageStyle, TextStyle, View } from "react-native"
 
 import { Text } from "./Text"
 import { AutoImage } from "./AutoImage"
-import { Icon } from "./Icon"
-import { colors, spacing, typography } from "app/theme"
-import { useStores } from "app/models"
+import { colors, spacing } from "app/theme"
 import { TouchableOpacity } from "react-native-gesture-handler"
 
 export default function MarketplaceCard(_props) {
-  const {item} = _props
-  const { username, reputation, send, price } = item
+  const { item } = _props
+  const reputation = ""
+  const {
+    PayerUser: { username },
+  } = item
+  console.log(item)
   return (
     <View style={[$container, $shadow]}>
       <View>
@@ -30,8 +31,8 @@ export default function MarketplaceCard(_props) {
                 <Text text="PRECIO" preset="h3" style={$accent400} />
               </View>
               <View>
-                <Text text={send} preset="h3" />
-                <Text text={price} preset="h3" />
+                <Text text={`${item.payer_amount} ${item.PayerCurrency?.name}`} preset="h3" />
+                <Text text={`${item.payee_amount} ${item.PayeeCurrency?.name}`} preset="h3" />
               </View>
             </View>
             <View style={{ marginTop: 2 }}>

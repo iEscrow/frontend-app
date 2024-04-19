@@ -99,7 +99,8 @@ export default function CustomDrawerContent(props) {
           inactiveBackgroundColor="rgba(0,0,0,0)"
         />
         <DrawerItem
-          label="Ayuda"
+            label="Ayuda"
+            onPress={()=> navigation.navigate("HelpCenter")}
           style={{
             width: "100%",
             paddingLeft: 24,
@@ -120,7 +121,8 @@ export default function CustomDrawerContent(props) {
           inactiveBackgroundColor="rgba(0,0,0,0)"
         />
         <DrawerItem
-          label="Referidos"
+            label="Referidos"
+            onPress={()=> navigation.navigate("Referrals")}
           style={{
             width: "100%",
             paddingLeft: 24,

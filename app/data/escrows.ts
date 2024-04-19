@@ -17,6 +17,7 @@ export default {
       createdAt: "Creado 15/12/2022  -  17:05 HS",
       privacy: "PÚBLICO",
       isOpenDefault: false,
+
       details:
         "Tu escrow ya se encuentra publicado en el marketplace, te notificaremos en cuanto alguien quiera realizar el intercambio.",
     },
@@ -28,6 +29,19 @@ export default {
       createdAt: "Creado 15/12/2022  -  17:05 HS",
       privacy: "PÚBLICO",
       isOpenDefault: true,
+      chat: [{
+        me: true,
+        seen: true,
+        message: "Hola"
+      },{
+        me: false,
+        seen: true,
+        message: "Hola,  ¿Como estas?"
+      },{
+        me: false,
+        seen: false,
+        message: "estoy un poco demorado,  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod"
+      }],
       details:
         "Envía 100,75  USDT a la plataforma, una vez hecho esto notificaremos a tu contraparte para que te envíe la trasferencia bancaria.",
     },
@@ -39,6 +53,55 @@ export default {
       createdAt: "Creado 15/12/2022  -  17:05 HS",
       privacy: "PÚBLICO",
       isOpenDefault: true,
+      chat: [{
+        me: true,
+        seen: false,
+        message: "Hola"
+      },{
+        me: false,
+        seen: false,
+        message: "Hola,  ¿Como estas?"
+      },{
+        me: false,
+        seen: false,
+        message: "estoy un poco demorado,  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod"
+      },{
+        me: true,
+        seen: false,
+        message: "Hola"
+      },{
+        me: false,
+        seen: false,
+        message: "Hola,  ¿Como estas?"
+      },{
+        me: false,
+        seen: false,
+        message: "estoy un poco demorado,  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod"
+      },{
+        me: true,
+        seen: false,
+        message: "Hola"
+      },{
+        me: false,
+        seen: false,
+        message: "Hola,  ¿Como estas?"
+      },{
+        me: false,
+        seen: false,
+        message: "estoy un poco demorado,  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod"
+      },{
+        me: true,
+        seen: false,
+        message: "Hola"
+      },{
+        me: false,
+        seen: false,
+        message: "Hola,  ¿Como estas?"
+      },{
+        me: false,
+        seen: false,
+        message: "estoy un poco demorado,  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod"
+      },],
       details:
         "Envía 100,75  USDT a la plataforma, una vez hecho esto notificaremos a tu contraparte para que te envíe la trasferencia bancaria.",
     },
@@ -49,7 +112,19 @@ export default {
       state: "CONFIRMADO",
       createdAt: "Creado 15/12/2022  -  17:05 HS",
       privacy: "PÚBLICO",
-      isOpenDefault: true,
+      isOpenDefault: true,chat: [{
+        me: true,
+        seen: true,
+        message: "Hola"
+      },{
+        me: false,
+        seen: true,
+        message: "Hola,  ¿Como estas?"
+      },{
+        me: false,
+        seen: false,
+        message: "estoy un poco demorado,  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod"
+      }],
       details:
         "Envía 100,75  USDT a la plataforma, una vez hecho esto notificaremos a tu contraparte para que te envíe la trasferencia bancaria.",
     },
@@ -60,7 +135,19 @@ export default {
       state: "CONFIRMADO",
       createdAt: "Creado 15/12/2022  -  17:05 HS",
       privacy: "PÚBLICO",
-      isOpenDefault: true,
+      isOpenDefault: true,chat: [{
+        me: true,
+        seen: true,
+        message: "Hola"
+      },{
+        me: false,
+        seen: true,
+        message: "Hola,  ¿Como estas?"
+      },{
+        me: false,
+        seen: false,
+        message: "estoy un poco demorado,  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod"
+      }],
       details:
         "Envía 100,75  USDT a la plataforma, una vez hecho esto notificaremos a tu contraparte para que te envíe la trasferencia bancaria.",
     },

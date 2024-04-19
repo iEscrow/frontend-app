@@ -1,21 +1,18 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, { FC } from "react"
 import { TextStyle, View, ViewStyle, Dimensions, ImageStyle } from "react-native"
 import { AutoImage, Button, Icon, Screen, Text, TextField, Toggle } from "../components"
 import { DemoTabScreenProps } from "../navigators/DemoNavigator"
 import { colors, spacing, typography } from "../theme"
-import { translate } from "../i18n"
-import SelectDropdown from "react-native-select-dropdown"
 import { TouchableOpacity } from "react-native-gesture-handler"
 
-const coins = ["USDT", "ETC", "BTC", "BNB"]
-const options = ["Mercado Pago", "Transferencia bancaria"]
 const { width } = Dimensions.get("screen")
 
 export const CreateEscrow2Screen: FC<DemoTabScreenProps<"CreateEscrow2">> =
   function CreateEscrow2Screen(_props) {
     const [bbva, setBBVA] = React.useState(true)
     const [galicia, setGalicia] = React.useState(false)
-    const { navigation } = _props
+    const { navigation, route: {params:{isPrivate}} } = _props
     const checkGalicia = () => {
       setGalicia(true)
       setBBVA(false)
@@ -27,8 +24,6 @@ export const CreateEscrow2Screen: FC<DemoTabScreenProps<"CreateEscrow2">> =
 
     return (
       <Screen preset="scroll" safeAreaEdges={["top"]} contentContainerStyle={$container}>
-       
-     
         <AutoImage source={require("../../assets/images/logo.png")} style={$logo} />
         <View style={$itemsContainer}>
           <Text
@@ -37,10 +32,7 @@ export const CreateEscrow2Screen: FC<DemoTabScreenProps<"CreateEscrow2">> =
             style={$title}
           />
           <View style={{}}>
-            <TouchableOpacity
-              style={{ flexDirection: "row", gap: spacing.md }}
-              onPress={checkBBVa}
-            >
+            <TouchableOpacity style={{ flexDirection: "row", gap: spacing.md }} onPress={checkBBVa}>
               <Toggle variant="radio" value={bbva} containerStyle={{ marginTop: 4 }} />
               <Text text="BBVA" size="text1" weight="normal" />
             </TouchableOpacity>
@@ -62,7 +54,7 @@ export const CreateEscrow2Screen: FC<DemoTabScreenProps<"CreateEscrow2">> =
                 <Text text="0000321XXXXX4684351" preset="text2" />
               </View>
             </View>
-            <View style={[{ marginTop: 12, position: "relative" }]}>
+            <View style={{ marginTop: 12, position: "relative" }}>
               <View style={$divider} />
               <Icon
                 icon="details"
@@ -101,7 +93,7 @@ export const CreateEscrow2Screen: FC<DemoTabScreenProps<"CreateEscrow2">> =
                 <Text text="0000321XXXXX4684351" preset="text2" />
               </View> */}
             </View>
-            <View style={[{ marginTop: 12, position: "relative" }]}>
+            <View style={{ marginTop: 12, position: "relative" }}>
               <View style={$divider} />
               <Icon
                 icon="details"
@@ -128,9 +120,10 @@ export const CreateEscrow2Screen: FC<DemoTabScreenProps<"CreateEscrow2">> =
               <Text text="% DE COMISIÓN" preset="h4" style={{ marginBottom: 8 }} />
               <View style={{ flexDirection: "row", alignItems: "flex-start", gap: 12 }}>
                 <TextField
-                  containerStyle={{ height: 36 }}
-                  inputWrapperStyle={{ height: 36 }}
-                  style={{ fontSize: 18, lineHeight: 35, paddingBottom: 8 }}
+                  inputWrapperStyle={{ height: 40 }}
+                  style={{ fontSize: 18, marginTop: 0,
+                    marginBottom: 0 }}
+                  textAlignVertical="center"
                 />
                 <Icon icon="alert" color={colors.palette.info} size={16} />
               </View>
@@ -150,9 +143,11 @@ export const CreateEscrow2Screen: FC<DemoTabScreenProps<"CreateEscrow2">> =
                   <Text text="Moneda local" preset="overline" />
                 </View>
                 <TextField
-                  containerStyle={{ height: 36, maxWidth: 200, width: "100%" }}
-                  inputWrapperStyle={{ height: 36 }}
-                  style={{ fontSize: 18, lineHeight: 35, paddingBottom: 8 }}
+                  containerStyle={{ maxWidth: 200, width: "100%" }}
+                  inputWrapperStyle={{ height: 40 }}
+                  style={{ fontSize: 18, marginTop: 0,
+                    marginBottom: 0 }}
+                  textAlignVertical="center"
                 />
               </View>
               <View
@@ -171,21 +166,22 @@ export const CreateEscrow2Screen: FC<DemoTabScreenProps<"CreateEscrow2">> =
                 </View>
                 <TextField
                   containerStyle={{ height: 36, maxWidth: 200, width: "100%" }}
-                  inputWrapperStyle={{ height: 36 }}
-                  style={{ fontSize: 18, lineHeight: 35, paddingBottom: 8 }}
+                  inputWrapperStyle={{ height: 40 }}
+                  style={{ fontSize: 18, marginTop: 0,
+                    marginBottom: 0 }}
+                  textAlignVertical="center"
                 />
               </View>
             </View>
             <View style={$divider} />
-            <View style={{ marginTop: 14, marginBottom:  16}}>
+            <View style={{ marginTop: 14, marginBottom: 16 }}>
               <Text text="TOTAL A ENVIAR" preset="h3" style={{ marginBottom: 2 }} />
-              <Text text="Fee: 0.75%" preset="text2" style={{ marginBottom: 8 }} />
               <View style={{ flexDirection: "row", alignItems: "flex-start", gap: 12 }}>
                 <TextField
                   RightAccessory={() => (
                     <View
                       style={{
-                        height: 32,
+                        height: 36,
                         alignItems: "center",
                         justifyContent: "center",
                         paddingRight: 8,
@@ -195,16 +191,32 @@ export const CreateEscrow2Screen: FC<DemoTabScreenProps<"CreateEscrow2">> =
                     </View>
                   )}
                   containerStyle={{ height: 36 }}
-                  inputWrapperStyle={{ height: 36, width: 170 }}
-                  style={{ fontSize: 18, lineHeight: 35, paddingBottom: 8 }}
+                  inputWrapperStyle={{ height:40, width: 170 }}
+                  style={{ fontSize: 18, marginTop: 0,
+                    marginBottom: 0}}
+                  textAlignVertical="center"
                 />
                 <Icon icon="alert" color={colors.palette.info} size={16} />
               </View>
+              <Text text="Fee: 0.75%" preset="text2" style={{ marginTop: 8 }} />
+
             </View>
             <View style={$divider} />
-            <View style={{flexDirection:"row", justifyContent:"space-around", marginTop: 14}}>
-              <Button  preset="gray" text="atras" textStyle={{textTransform:"uppercase", fontSize: 18,lineHeight: 27}} style={{ paddingVertical: 6, borderRadius: 45 }}/>
-              <Button preset="filled" text="publicar" textStyle={{ textTransform: "uppercase", fontSize: 18, lineHeight: 27 }} style={{ paddingVertical: 6, borderRadius: 45}} />
+            <View style={{ flexDirection: "row", justifyContent: "space-around", marginTop: 14 }}>
+              <Button
+                preset="gray"
+                text="atras"
+                textStyle={{ textTransform: "uppercase", fontSize: 18, lineHeight: 27 }}
+                style={{ paddingVertical: 6, borderRadius: 45 }}
+                onPress={()=> navigation.goBack()}
+              />
+              <Button
+                preset="filled"
+                text={isPrivate ? "activar" : "publicar"}
+                textStyle={{ textTransform: "uppercase", fontSize: 18, lineHeight: 27 }}
+                style={{ paddingVertical: 6, borderRadius: 45 }}
+                onPress={()=> navigation.navigate("EscrowCreated")}
+              />
             </View>
           </View>
         </View>

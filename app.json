@@ -14,7 +14,8 @@
       "backgroundColor": "#121212"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/37c0f8ec-f0d2-4489-a714-1320c419b8fa"
     },
     "jsEngine": "hermes",
     "assetBundlePatterns": [
@@ -57,6 +58,14 @@
     },
     "plugins": [
       "expo-localization"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "37c0f8ec-f0d2-4489-a714-1320c419b8fa"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    }
   }
 }

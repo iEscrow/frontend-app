@@ -76,11 +76,14 @@ const $sizeStyles = {
   sm: { fontSize: 16, lineHeight: 24 } satisfies TextStyle,
   xs: { fontSize: 14, lineHeight: 21 } satisfies TextStyle,
   xxs: { fontSize: 12, lineHeight: 18 } satisfies TextStyle,
+  h2: {fontSize: 24, lineHeight: 30} satisfies TextStyle,
   h3: {fontSize: 18, lineHeight: 22.5} satisfies TextStyle,
   h4: { fontSize: 14, lineHeight: 21 } satisfies TextStyle,
+  h6: { fontSize: 14, lineHeight: 18 } satisfies TextStyle,
   text1:{ fontSize: 14, lineHeight: 20 } satisfies TextStyle,
   text2:{ fontSize: 14, lineHeight: 18 } satisfies TextStyle,
-  overline:{ fontSize: 10, lineHeight: 15 } satisfies TextStyle
+  overline: { fontSize: 10, lineHeight: 15 } satisfies TextStyle,
+  btn1:  { fontSize: 18, lineHeight: 27 } satisfies TextStyle,
 }
 
 const $fontWeightStyles = Object.entries(typography.primary).reduce((acc, [weight, fontFamily]) => {
@@ -107,11 +110,14 @@ const $presets = {
   formLabel: [$baseStyle, $fontWeightStyles.medium] as StyleProp<TextStyle>,
 
   formHelper: [$baseStyle, $sizeStyles.sm, $fontWeightStyles.normal] as StyleProp<TextStyle>,
+  h2: [$baseStyle, $sizeStyles.h2, $fontWeightStyles.medium],
   h3: [$baseStyle, $sizeStyles.h3, $fontWeightStyles.medium],
   h4: [$baseStyle, $sizeStyles.h4, $fontWeightStyles.medium],
+  h6: [$baseStyle, $sizeStyles.h6, $fontWeightStyles.normal],
   text1: [$baseStyle, $sizeStyles.text1, $fontWeightStyles.normal],
   text2: [$baseStyle, $sizeStyles.text2, $fontWeightStyles.medium],
   overline: [$baseStyle, $sizeStyles.overline, $fontWeightStyles.normal],
+  btn1: [$baseStyle, $sizeStyles.btn1, $fontWeightStyles.semiBold],
 
 }
 

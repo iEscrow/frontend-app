@@ -117,6 +117,18 @@ export const iconRegistry = {
   create: require("../../assets/icons/create.png"),
   alert: require("../../assets/icons/alert.png"),
   notifications: require("../../assets/icons/notifications.png"),
+  chat_1: require("../../assets/icons/chat-1.png"),
+  chat_2: require("../../assets/icons/chat-2.png"),
+  chat_3: require("../../assets/icons/chat-3.png"),
+  chat_4: require("../../assets/icons/chat-4.png"),
+  chat_5: require("../../assets/icons/chat-5.png"),
+  chat_6: require("../../assets/icons/chat-6.png"),
+  chat_7: require("../../assets/icons/chat-7.png"),
+  chat_8: require("../../assets/icons/chat-8.png"),
+  chat_9: require("../../assets/icons/chat-9.png"),
+  chat_0: require("../../assets/icons/chat-0.png"),
+  chat_more: require("../../assets/icons/chat-more.png"),
+  sendMessage: require("../../assets/icons/sendMessage.png")
 }
 
 const $imageStyle: ImageStyle = {

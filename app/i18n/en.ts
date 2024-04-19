@@ -28,6 +28,7 @@ const en = {
     signIn: "Login screen",
     tapToSignIn: "Login",
     emailFieldPlaceholder: "Email",
+    usernameFieldPlaceholder: "Username",
     passwordFieldPlaceholder: "Password",
   },
   demoShowroomScreen: {

@@ -67,6 +67,7 @@ const AppStack = observer(function AppStack() {
     headerTintColor: colors.palette.white,
     headerTransparent: true,
     headerLeft: false,
+    drawerPosition: 'right',
     headerRight: () => (
       <View
         style={{
@@ -96,15 +97,19 @@ const AppStack = observer(function AppStack() {
       screenOptions={defaultOptions}
       initialRouteName={isAuthenticated ? "BottomsTabs" : "Login"}
       drawerContent={CustomDrawerContent}
+      
     >
       {isAuthenticated ? (
         <>
           <Drawer.Screen name="BottomsTabs" component={DemoNavigator} />
-          <Drawer.Screen name="Profile" component={Screens.CreateEscrowScreen} />
-          <Drawer.Screen name="Help" component={Screens.CreateEscrowScreen} />
+          <Drawer.Screen name="Profile" component={Screens.HelpCenterScreen} />
+
+          <Drawer.Screen name="HelpCenter" component={Screens.HelpCenterScreen} />
+          <Drawer.Screen name="HelpSingle" component={Screens.HelpSingleScreen} />
           <Drawer.Screen name="FAQ’s" component={Screens.CreateEscrowScreen} />
-          <Drawer.Screen name="Referrals" component={Screens.CreateEscrowScreen} />
+          <Drawer.Screen name="Referrals" component={Screens.ReferralsScreen} />
           <Drawer.Screen name="CreateEscrow2" component={Screens.CreateEscrow2Screen} />
+          <Drawer.Screen name="EscrowCreated" component={Screens.EscrowCreatedScreen} />
         </>
       ) : (
         <>

@@ -194,7 +194,7 @@ export function Screen(props: ScreenProps) {
     keyboardOffset = 0,
     safeAreaEdges,
     StatusBarProps,
-    statusBarStyle = "light",
+    statusBarStyle = "light"
   } = props
   const colorScheme = useColorScheme();
   const $containerInsets = useSafeAreaInsetsStyle(safeAreaEdges)

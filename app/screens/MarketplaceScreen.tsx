@@ -1,33 +1,50 @@
-import React, { FC } from "react"
-import { TextStyle, View, ViewStyle, Dimensions, ImageStyle, FlatList } from "react-native"
-import { AutoImage, Button, Icon, Screen, Text, TextField, Toggle } from "../components"
-import { DemoTabScreenProps } from "../navigators/DemoNavigator"
-import { colors, spacing, typography } from "../theme"
-import { translate } from "../i18n"
-import SelectDropdown from "react-native-select-dropdown"
-import { TouchableOpacity } from "react-native-gesture-handler"
 import MarketplaceCard from "app/components/MarketplaceCard"
-import escrows from "app/data/escrows"
+import { api } from "app/services/api"
+import React, { FC, useEffect, useState } from "react"
+import { Dimensions, FlatList, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 
+import { AutoImage, Screen, Text } from "../components"
+import { DemoTabScreenProps } from "../navigators/DemoNavigator"
+import { spacing } from "../theme"
 
 const { width } = Dimensions.get("screen")
 
 export const MarketplaceScreen: FC<DemoTabScreenProps<"Marketplace">> = function MarketplaceScreen(
   _props,
 ) {
+  const [data, setData] = useState([])
+  console.log(data)
+
+  useEffect(() => {
+    api
+      .escrows()
+      .then((res) => setData(res.data))
+      .catch((error) => console.log(error))
+  }, [])
+
   return (
     <Screen preset="fixed" safeAreaEdges={["top"]} contentContainerStyle={$container}>
       <AutoImage source={require("../../assets/images/logo.png")} style={$logo} />
-      <View style={{ paddingHorizontal: 8 }}>
+      <View style={$content}>
         <Text text="Marketplace" preset="h3" style={$title} />
-        <FlatList style={$cards} data={escrows.marketplace} renderItem={(item)=> <MarketplaceCard {...item} />} keyExtractor={item => item.id}  />
+        <FlatList
+          contentContainerStyle={$cards}
+          data={data}
+          renderItem={(item) => <MarketplaceCard {...item} />}
+          keyExtractor={(item) => item.id}
+        />
       </View>
     </Screen>
   )
 }
 
 const $container: ViewStyle = {
-  paddingBottom: spacing.xxl,
+  flex: 1,
+}
+
+const $content: ViewStyle = {
+  paddingHorizontal: 8,
+  flex: 1,
 }
 
 const $cards: ViewStyle = {

@@ -10,23 +10,31 @@ import MarketplaceCard from "app/components/MarketplaceCard"
 import MyEscrowCard from "app/components/MyEscrowCard"
 import escrows from "app/data/escrows"
 
-
 const { width } = Dimensions.get("screen")
 
-export const MyEscrowsScreen: FC<DemoTabScreenProps<"MyEscrows">> =
-  function MyEscrowsScreen(_props) {
-   
-
-    return (
-      <Screen preset="fixed" safeAreaEdges={["top"]} contentContainerStyle={$container}>
+export const MyEscrowsScreen: FC<DemoTabScreenProps<"MyEscrows">> = function MyEscrowsScreen(
+  _props,
+) {
+  return (
+    <Screen preset="scroll" safeAreaEdges={["top"]} contentContainerStyle={$container}>
       <AutoImage source={require("../../assets/images/logo.png")} style={$logo} />
       <View style={{ paddingHorizontal: 8 }}>
         <Text text="Mis escrows" preset="h3" style={$title} />
-        <FlatList style={$cards} data={escrows.personal} contentContainerStyle={{ paddingBottom: 400}} showsVerticalScrollIndicator={false} renderItem={(item)=> <MyEscrowCard {...item} />} keyExtractor={item => item.id}   />
+        {/* <FlatList
+          style={$cards}
+          data={escrows.personal}
+          contentContainerStyle={{ paddingBottom: 400 }}
+          showsVerticalScrollIndicator={false}
+          renderItem={(item) => <MyEscrowCard {...item} />}
+          keyExtractor={(item) => item.id}
+        /> */}
+        <View>{escrows.personal.map((escrow) => <MyEscrowCard {...escrow} key={escrow.id} />)}
+          
+        </View>
       </View>
     </Screen>
-    )
-  }
+  )
+}
 
 const $container: ViewStyle = {
   paddingBottom: spacing.xxl,
@@ -42,11 +50,10 @@ const $title: TextStyle = {
   marginTop: spacing.xl,
 }
 
-
 const $logo: ImageStyle = {
   marginTop: spacing.xxxl,
-  width: (width * 140) / 360,
-  height: (width * 62) / 360,
+  width: (width * 100) / 360,
+  height: (width * 45) / 360,
   marginLeft: "auto",
   marginRight: "auto",
 }

@@ -1,17 +1,11 @@
-import {
-  ApiResponse, 
-  ApisauceInstance,
-  create,
-} from "apisauce"
+import { ApiResponse, ApisauceInstance, create } from "apisauce"
 import Config from "../../config"
 import { GeneralApiProblem, getGeneralApiProblem } from "./apiProblem"
 
-import type {
-  ApiConfig,
-  ApiFeedResponse, 
-} from "./api.types"
+import type { ApiConfig, ApiFeedResponse } from "./api.types"
 import type { EpisodeSnapshotIn } from "../../models/Episode"
-
+import { getRootStore, useStores } from "app/models"
+import { Toast } from "toastify-react-native"
 
 /**
  * Configuring the apisauce instance.
@@ -43,32 +37,40 @@ export class Api {
     })
   }
 
-
   /**
    * Gets a list of recent React Native Radio episodes.
    */
-  async getEpisodes(): Promise<{ kind: "ok"; episodes: EpisodeSnapshotIn[] } | GeneralApiProblem> {
-    // make the api call
-    const response: ApiResponse<ApiFeedResponse> = await this.apisauce.get(
-      `api.json?rss_url=https%3A%2F%2Ffeeds.simplecast.com%2FhEI_f9Dx`,
-    )
 
+  async login({ username, password }): Promise<
+    | {
+        user: {
+          id: number
+          username: string
+          email: string
+          password: string
+          updatedAt: string
+          createdAt: string
+        }
+        token: string
+      }
+    | GeneralApiProblem
+  > {
+    // make the api call
+    const response: ApiResponse<ApiFeedResponse> = await this.apisauce.post(`/users/login`, {
+      username,
+      password,
+    })
     // the typical ways to die when calling an api
     if (!response.ok) {
-      const problem = getGeneralApiProblem(response)
+      const problem = getGeneralApiProblem(response.data.error)
+      Toast.error(response.data.error, "top")
       if (problem) return problem
     }
 
     // transform the data into the format we are expecting
     try {
-      const rawData = response.data
-
-      // This is where we transform the data into the shape we expect for our MST model.
-      const episodes: EpisodeSnapshotIn[] = rawData.items.map((raw) => ({
-        ...raw,
-      }))
-
-      return { kind: "ok", episodes }
+      Toast.success("Logueado con exito!", "top")
+      return { data: response.data }
     } catch (e) {
       if (__DEV__) {
         console.tron.error(`Bad data: ${e.message}\n${response.data}`, e.stack)
@@ -77,6 +79,40 @@ export class Api {
     }
   }
 
+  async escrows(): Promise<
+    | {
+        user: {
+          id: number
+          username: string
+          email: string
+          password: string
+          updatedAt: string
+          createdAt: string
+        }
+        token: string
+      }
+    | GeneralApiProblem
+  > {
+    // make the api call
+
+    const response: ApiResponse<ApiFeedResponse> = await this.apisauce.get(`/escrows`)
+    console.log(response)
+    // the typical ways to die when calling an api
+    if (!response.ok) {
+      const problem = getGeneralApiProblem(response)
+      if (problem) return problem
+    }
+
+    // transform the data into the format we are expecting
+    try {
+      return { data: response.data }
+    } catch (e) {
+      if (__DEV__) {
+        console.tron.error(`Bad data: ${e.message}\n${response.data}`, e.stack)
+      }
+      return { kind: "bad-data" }
+    }
+  }
 }
 
 // Singleton instance of the API for convenience

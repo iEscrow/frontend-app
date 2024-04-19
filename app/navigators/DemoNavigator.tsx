@@ -13,7 +13,8 @@ import * as Screens from "app/screens"
 export type DemoTabParamList = {
   Marketplace: undefined
   CreateEscrow:undefined
-  CreateEscrow2:undefined
+  CreateEscrow2: {isPrivate: boolean}
+  EscrowCreated: undefined
   MyEscrows: undefined
 }
 
