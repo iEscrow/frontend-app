@@ -9,4 +9,7 @@ export default {
   API_URL: "localhost:3000/api",
 }
 
-/*  API_URL: "3.131.96.110:3000/api", */
+/*  
+API_URL: "3.131.96.110:3000/api",
+API_URL: "localhost:3000/api",
+*/

@@ -31,6 +31,7 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
       setAuthEmail,
       authPassword,
       setAuthPassword,
+      distributeAuthToken,
       setAuthToken,
       validationEmailError,
       validationPasswordError,
@@ -60,6 +61,7 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
       .then((response) => {
         console.log("response", response)
         setAuthToken(response.data.token)
+        distributeAuthToken(response.data.token)
         setAuthEmail(response.data.user.email)
         setIsSubmitted(false)
       })

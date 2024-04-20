@@ -5,6 +5,9 @@ import { Text } from "./Text"
 import { AutoImage } from "./AutoImage"
 import { colors, spacing } from "app/theme"
 import { TouchableOpacity } from "react-native-gesture-handler"
+import { api } from "app/services/api"
+import { navigate } from "app/navigators"
+import { escrowTransactions } from "app/screens"
 
 export default function MarketplaceCard(_props) {
   const { item } = _props
@@ -12,7 +15,17 @@ export default function MarketplaceCard(_props) {
   const {
     PayerUser: { username },
   } = item
-  console.log(item)
+
+  const handleBuy = () => {
+    console.log("buy")
+
+    navigate("BuyEscrow", item)
+    /* api
+      .buyEscrow(item.id)
+      .then((res) => console.log(res))
+      .catch((error) => console.log(error)) */
+  }
+
   return (
     <View style={[$container, $shadow]}>
       <View>
@@ -45,7 +58,7 @@ export default function MarketplaceCard(_props) {
                 </View>
                 <View>
                   <Text text="Método de pago" preset="overline" style={$primary400} />
-                  <Text text="Transferencia bancaria" preset="overline" />
+                  <Text text={escrowTransactions[item?.TransactionType.name]} preset="overline" />
                 </View>
               </View>
             </View>
@@ -53,13 +66,13 @@ export default function MarketplaceCard(_props) {
         </View>
       </View>
       <View style={{ justifyContent: "center" }}>
-        <VerticalButton text={"COMPRAR"} />
+        <VerticalButton text={"COMPRAR"} onPress={handleBuy} />
       </View>
     </View>
   )
 }
 
-const VerticalButton = ({ text }) => {
+const VerticalButton = ({ text, onPress }) => {
   const arrayOfChars = text.split("")
 
   const $verticalContainer: ViewStyle = {
@@ -71,7 +84,7 @@ const VerticalButton = ({ text }) => {
   }
   const $char: TextStyle = { lineHeight: 15, fontSize: 14, textAlign: "center" }
   return (
-    <TouchableOpacity style={$verticalContainer}>
+    <TouchableOpacity style={$verticalContainer} onPress={onPress}>
       {arrayOfChars.map((char, i) => (
         <Text text={char} preset="h4" style={$char} key={i} />
       ))}

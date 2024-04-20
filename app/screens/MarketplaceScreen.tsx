@@ -1,7 +1,15 @@
 import MarketplaceCard from "app/components/MarketplaceCard"
 import { api } from "app/services/api"
 import React, { FC, useEffect, useState } from "react"
-import { Dimensions, FlatList, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
+import {
+  Dimensions,
+  FlatList,
+  ImageStyle,
+  RefreshControl,
+  TextStyle,
+  View,
+  ViewStyle,
+} from "react-native"
 
 import { AutoImage, Screen, Text } from "../components"
 import { DemoTabScreenProps } from "../navigators/DemoNavigator"
@@ -13,14 +21,25 @@ export const MarketplaceScreen: FC<DemoTabScreenProps<"Marketplace">> = function
   _props,
 ) {
   const [data, setData] = useState([])
+  const [refreshing, setRefreshing] = useState(false)
   console.log(data)
 
   useEffect(() => {
+    getEscrows()
+  }, [])
+
+  const getEscrows = () => {
     api
       .escrows()
       .then((res) => setData(res.data))
       .catch((error) => console.log(error))
-  }, [])
+      .finally(() => setRefreshing(false))
+  }
+
+  const handleRefresh = () => {
+    setRefreshing(true)
+    getEscrows()
+  }
 
   return (
     <Screen preset="fixed" safeAreaEdges={["top"]} contentContainerStyle={$container}>
@@ -30,6 +49,7 @@ export const MarketplaceScreen: FC<DemoTabScreenProps<"Marketplace">> = function
         <FlatList
           contentContainerStyle={$cards}
           data={data}
+          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />}
           renderItem={(item) => <MarketplaceCard {...item} />}
           keyExtractor={(item) => item.id}
         />

@@ -1,6 +1,6 @@
 // TODO: write documentation for colors and palette in own markdown file and add links from here
 
-const palette = {
+export const palette = {
   white: "#FFFFFF",
   black: "#000000",
 
@@ -40,8 +40,7 @@ const palette = {
   bottomTabsBackground: "#121212",
 
   btn2: "#414141",
-  lineGray: "#373737"
-
+  lineGray: "#373737",
 } as const
 
 export const colors = {
@@ -64,8 +63,7 @@ export const colors = {
   error: palette.error,
 
   errorBackground: palette.error,
-bottomTabs: {
-  background: palette.bottomTabsBackground
-}
-
+  bottomTabs: {
+    background: palette.bottomTabsBackground,
+  },
 }

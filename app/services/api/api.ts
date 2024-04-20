@@ -3,8 +3,6 @@ import Config from "../../config"
 import { GeneralApiProblem, getGeneralApiProblem } from "./apiProblem"
 
 import type { ApiConfig, ApiFeedResponse } from "./api.types"
-import type { EpisodeSnapshotIn } from "../../models/Episode"
-import { getRootStore, useStores } from "app/models"
 import { Toast } from "toastify-react-native"
 
 /**
@@ -37,10 +35,6 @@ export class Api {
     })
   }
 
-  /**
-   * Gets a list of recent React Native Radio episodes.
-   */
-
   async login({ username, password }): Promise<
     | {
         user: {
@@ -55,19 +49,16 @@ export class Api {
       }
     | GeneralApiProblem
   > {
-    // make the api call
     const response: ApiResponse<ApiFeedResponse> = await this.apisauce.post(`/users/login`, {
       username,
       password,
     })
-    // the typical ways to die when calling an api
     if (!response.ok) {
       const problem = getGeneralApiProblem(response.data.error)
       Toast.error(response.data.error, "top")
       if (problem) return problem
     }
 
-    // transform the data into the format we are expecting
     try {
       Toast.success("Logueado con exito!", "top")
       return { data: response.data }
@@ -93,10 +84,42 @@ export class Api {
       }
     | GeneralApiProblem
   > {
+    const response: ApiResponse<ApiFeedResponse> = await this.apisauce.get(`/escrows/marketplace`)
+    console.log(response)
+    if (response.status === 403)
+      return getGeneralApiProblem({ problem: "CLIENT_ERROR", status: 403 })
+
+    if (!response.ok) {
+      const problem = getGeneralApiProblem(response)
+      if (problem) return problem
+    }
+    try {
+      return { data: response.data }
+    } catch (e) {
+      if (__DEV__) {
+        console.tron.error(`Bad data: ${e.message}\n${response.data}`, e.stack)
+      }
+      return { kind: "bad-data" }
+    }
+  }
+
+  async buyEscrow(id: string): Promise<
+    | {
+        user: {
+          id: number
+          username: string
+          email: string
+          password: string
+          updatedAt: string
+          createdAt: string
+        }
+        token: string
+      }
+    | GeneralApiProblem
+  > {
     // make the api call
 
-    const response: ApiResponse<ApiFeedResponse> = await this.apisauce.get(`/escrows`)
-    console.log(response)
+    const response: ApiResponse<ApiFeedResponse> = await this.apisauce.put(`/escrows/buy/${id}`)
     // the typical ways to die when calling an api
     if (!response.ok) {
       const problem = getGeneralApiProblem(response)
@@ -104,6 +127,22 @@ export class Api {
     }
 
     // transform the data into the format we are expecting
+    try {
+      return { data: response.data }
+    } catch (e) {
+      if (__DEV__) {
+        console.tron.error(`Bad data: ${e.message}\n${response.data}`, e.stack)
+      }
+      return { kind: "bad-data" }
+    }
+  }
+
+  async getCurrencies() {
+    const response: ApiResponse<ApiFeedResponse> = await this.apisauce.get(`/currencies`)
+    if (!response.ok) {
+      const problem = getGeneralApiProblem(response)
+      if (problem) return problem
+    }
     try {
       return { data: response.data }
     } catch (e) {

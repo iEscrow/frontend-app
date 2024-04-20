@@ -24,6 +24,7 @@ import { createDrawerNavigator } from "@react-navigation/drawer"
 import CustomDrawerContent from "app/components/CustomDrawerContent"
 import { View } from "react-native"
 import { Icon } from "app/components"
+import BuyEscrow from "app/screens/BuyEscrow"
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
  * as well as what properties (if any) they might take when navigating to them.
@@ -41,6 +42,7 @@ export type AppStackParamList = {
   Marketplace: undefined
   CreateEscrow: undefined
   MyEscrows: NavigatorScreenParams<DemoTabParamList>
+  BuyEscrow: undefined
 }
 
 /**
@@ -67,7 +69,7 @@ const AppStack = observer(function AppStack() {
     headerTintColor: colors.palette.white,
     headerTransparent: true,
     headerLeft: false,
-    drawerPosition: 'right',
+    drawerPosition: "right",
     headerRight: () => (
       <View
         style={{
@@ -86,7 +88,12 @@ const AppStack = observer(function AppStack() {
           elevation: 4,
         }}
       >
-        <Icon icon="notifications" size={24} onPress={() => console.log("notifications")} color="white" />
+        <Icon
+          icon="notifications"
+          size={24}
+          onPress={() => console.log("notifications")}
+          color="white"
+        />
         <Icon icon="profile" size={44} onPress={navigation.openDrawer} />
       </View>
     ),
@@ -97,7 +104,6 @@ const AppStack = observer(function AppStack() {
       screenOptions={defaultOptions}
       initialRouteName={isAuthenticated ? "BottomsTabs" : "Login"}
       drawerContent={CustomDrawerContent}
-      
     >
       {isAuthenticated ? (
         <>
@@ -110,6 +116,7 @@ const AppStack = observer(function AppStack() {
           <Drawer.Screen name="Referrals" component={Screens.ReferralsScreen} />
           <Drawer.Screen name="CreateEscrow2" component={Screens.CreateEscrow2Screen} />
           <Drawer.Screen name="EscrowCreated" component={Screens.EscrowCreatedScreen} />
+          <Drawer.Screen name="BuyEscrow" component={BuyEscrow} />
         </>
       ) : (
         <>

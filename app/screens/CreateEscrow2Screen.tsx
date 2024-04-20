@@ -12,7 +12,12 @@ export const CreateEscrow2Screen: FC<DemoTabScreenProps<"CreateEscrow2">> =
   function CreateEscrow2Screen(_props) {
     const [bbva, setBBVA] = React.useState(true)
     const [galicia, setGalicia] = React.useState(false)
-    const { navigation, route: {params:{isPrivate}} } = _props
+    const {
+      navigation,
+      route: {
+        params: { isPrivate, sendCurrency, recieveCurrency },
+      },
+    } = _props
     const checkGalicia = () => {
       setGalicia(true)
       setBBVA(false)
@@ -22,6 +27,7 @@ export const CreateEscrow2Screen: FC<DemoTabScreenProps<"CreateEscrow2">> =
       setBBVA(true)
     }
 
+    console.log(sendCurrency, recieveCurrency)
     return (
       <Screen preset="scroll" safeAreaEdges={["top"]} contentContainerStyle={$container}>
         <AutoImage source={require("../../assets/images/logo.png")} style={$logo} />
@@ -121,8 +127,7 @@ export const CreateEscrow2Screen: FC<DemoTabScreenProps<"CreateEscrow2">> =
               <View style={{ flexDirection: "row", alignItems: "flex-start", gap: 12 }}>
                 <TextField
                   inputWrapperStyle={{ height: 40 }}
-                  style={{ fontSize: 18, marginTop: 0,
-                    marginBottom: 0 }}
+                  style={{ fontSize: 18, marginTop: 0, marginBottom: 0 }}
                   textAlignVertical="center"
                 />
                 <Icon icon="alert" color={colors.palette.info} size={16} />
@@ -145,8 +150,7 @@ export const CreateEscrow2Screen: FC<DemoTabScreenProps<"CreateEscrow2">> =
                 <TextField
                   containerStyle={{ maxWidth: 200, width: "100%" }}
                   inputWrapperStyle={{ height: 40 }}
-                  style={{ fontSize: 18, marginTop: 0,
-                    marginBottom: 0 }}
+                  style={{ fontSize: 18, marginTop: 0, marginBottom: 0 }}
                   textAlignVertical="center"
                 />
               </View>
@@ -167,8 +171,7 @@ export const CreateEscrow2Screen: FC<DemoTabScreenProps<"CreateEscrow2">> =
                 <TextField
                   containerStyle={{ height: 36, maxWidth: 200, width: "100%" }}
                   inputWrapperStyle={{ height: 40 }}
-                  style={{ fontSize: 18, marginTop: 0,
-                    marginBottom: 0 }}
+                  style={{ fontSize: 18, marginTop: 0, marginBottom: 0 }}
                   textAlignVertical="center"
                 />
               </View>
@@ -191,15 +194,13 @@ export const CreateEscrow2Screen: FC<DemoTabScreenProps<"CreateEscrow2">> =
                     </View>
                   )}
                   containerStyle={{ height: 36 }}
-                  inputWrapperStyle={{ height:40, width: 170 }}
-                  style={{ fontSize: 18, marginTop: 0,
-                    marginBottom: 0}}
+                  inputWrapperStyle={{ height: 40, width: 170 }}
+                  style={{ fontSize: 18, marginTop: 0, marginBottom: 0 }}
                   textAlignVertical="center"
                 />
                 <Icon icon="alert" color={colors.palette.info} size={16} />
               </View>
               <Text text="Fee: 0.75%" preset="text2" style={{ marginTop: 8 }} />
-
             </View>
             <View style={$divider} />
             <View style={{ flexDirection: "row", justifyContent: "space-around", marginTop: 14 }}>
@@ -208,14 +209,14 @@ export const CreateEscrow2Screen: FC<DemoTabScreenProps<"CreateEscrow2">> =
                 text="atras"
                 textStyle={{ textTransform: "uppercase", fontSize: 18, lineHeight: 27 }}
                 style={{ paddingVertical: 6, borderRadius: 45 }}
-                onPress={()=> navigation.goBack()}
+                onPress={() => navigation.goBack()}
               />
               <Button
                 preset="filled"
                 text={isPrivate ? "activar" : "publicar"}
                 textStyle={{ textTransform: "uppercase", fontSize: 18, lineHeight: 27 }}
                 style={{ paddingVertical: 6, borderRadius: 45 }}
-                onPress={()=> navigation.navigate("EscrowCreated")}
+                onPress={() => navigation.navigate("EscrowCreated")}
               />
             </View>
           </View>

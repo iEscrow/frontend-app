@@ -35,7 +35,7 @@ export const AuthenticationStoreModel = types
     },
     distributeAuthToken(value?: string) {
       const token = value || store.authToken
-      api.apiSauce.setHeader("Authorization", `Bearer ${token}`)
+      api.apisauce.setHeader("Authorization", `Bearer ${token}`)
     },
     logout() {
       store.authToken = undefined
