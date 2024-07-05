@@ -1,16 +1,33 @@
-import { ApiResponse, ApisauceInstance, create } from "apisauce"
-import Config from "../../config"
-import { GeneralApiProblem, getGeneralApiProblem } from "./apiProblem"
+/* eslint-disable camelcase */
+import { ApiResponse, ApisauceInstance, create } from 'apisauce';
+import { Toast } from 'toastify-react-native';
+
+import Config from '../../config';
+import { GeneralApiProblem, getGeneralApiProblem } from './apiProblem';
 
 import type { ApiConfig, ApiFeedResponse } from "./api.types"
-import { Toast } from "toastify-react-native"
-
 /**
  * Configuring the apisauce instance.
  */
 export const DEFAULT_API_CONFIG: ApiConfig = {
   url: Config.API_URL,
-  timeout: 10000,
+  timeout: 30,
+}
+
+type Currency = {
+  Country: {
+    Country: Object | null
+    country_id: number | null
+  } | null
+  CurrencyType: Object
+  Token: Object | null
+  TokenStandard: Object | null
+  country_id: number | null
+  id: number
+  name: string
+  token_id: number | null
+  token_standard_id: number | null
+  type: number
 }
 
 /**
@@ -85,7 +102,7 @@ export class Api {
     | GeneralApiProblem
   > {
     const response: ApiResponse<ApiFeedResponse> = await this.apisauce.get(`/escrows/marketplace`)
-    console.log(response)
+
     if (response.status === 403)
       return getGeneralApiProblem({ problem: "CLIENT_ERROR", status: 403 })
 
@@ -93,6 +110,86 @@ export class Api {
       const problem = getGeneralApiProblem(response)
       if (problem) return problem
     }
+    try {
+      return { data: response.data }
+    } catch (e) {
+      if (__DEV__) {
+        console.tron.error(`Bad data: ${e.message}\n${response.data}`, e.stack)
+      }
+      return { kind: "bad-data" }
+    }
+  }
+
+  async myEscrows(): Promise<
+    | {
+        user: {
+          id: number
+          username: string
+          email: string
+          password: string
+          updatedAt: string
+          createdAt: string
+        }
+        token: string
+      }
+    | GeneralApiProblem
+  > {
+    const response: ApiResponse<ApiFeedResponse> = await this.apisauce.get(`/escrows/my-escrows`)
+
+    if (!response.ok) {
+      const problem = getGeneralApiProblem(response)
+      if (problem) return problem
+    }
+    try {
+      return { data: response.data }
+    } catch (e) {
+      if (__DEV__) {
+        console.tron.error(`Bad data: ${e.message}\n${response.data}`, e.stack)
+      }
+      return { kind: "bad-data" }
+    }
+  }
+
+  async createEscrow({
+    payer_currency,
+    payee_currency,
+    type,
+  }: {
+    payer_currency: Currency
+    payee_currency: Currency
+    type: number
+  }): Promise<GeneralApiProblem> {
+    const body = {
+      payer_currency,
+      payee_currency,
+      type,
+    }
+    console.log(body)
+    const response: ApiResponse<ApiFeedResponse> = await this.apisauce.post(`/escrows`, body)
+
+    if (!response.ok) {
+      const problem = getGeneralApiProblem(response)
+      if (problem) return problem
+    }
+
+    try {
+      return { data: response.data }
+    } catch (e) {
+      if (__DEV__) {
+        console.tron.error(`Bad data: ${e.message}\n${response.data}`, e.stack)
+      }
+      return { kind: "bad-data" }
+    }
+  }
+
+  async publishEscrow({ escrow }): Promise<GeneralApiProblem> {
+    const response: ApiResponse<ApiFeedResponse> = await this.apisauce.post(`/escrows`, escrow)
+
+    if (!response.ok) {
+      const problem = getGeneralApiProblem(response)
+      if (problem) return problem
+    }
+
     try {
       return { data: response.data }
     } catch (e) {
@@ -139,6 +236,38 @@ export class Api {
 
   async getCurrencies() {
     const response: ApiResponse<ApiFeedResponse> = await this.apisauce.get(`/currencies`)
+    if (!response.ok) {
+      const problem = getGeneralApiProblem(response)
+      if (problem) return problem
+    }
+    try {
+      return { data: response.data }
+    } catch (e) {
+      if (__DEV__) {
+        console.tron.error(`Bad data: ${e.message}\n${response.data}`, e.stack)
+      }
+      return { kind: "bad-data" }
+    }
+  }
+
+  async getBankAccounts() {
+    const response: ApiResponse<ApiFeedResponse> = await this.apisauce.get("/bank-account")
+    if (!response.ok) {
+      const problem = getGeneralApiProblem(response)
+      if (problem) return problem
+    }
+    try {
+      return { data: response.data }
+    } catch (e) {
+      if (__DEV__) {
+        console.tron.error(`Bad data: ${e.message}\n${response.data}`, e.stack)
+      }
+      return { kind: "bad-data" }
+    }
+  }
+
+  async getFooter() {
+    const response: ApiResponse<ApiFeedResponse> = await this.apisauce.get("/footer")
     if (!response.ok) {
       const problem = getGeneralApiProblem(response)
       if (problem) return problem

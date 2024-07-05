@@ -9,4 +9,5 @@ export default {
   API_URL: "http://192.168.0.17:3000/api",
 }
 
+/*  API_URL: "http://3.131.96.110:3000/api"  */
 /* API_URL: "http://192.168.0.17:3000/api", */

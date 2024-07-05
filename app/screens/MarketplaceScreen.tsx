@@ -1,4 +1,5 @@
 import MarketplaceCard from "app/components/MarketplaceCard"
+import { useStores } from "app/models"
 import { api } from "app/services/api"
 import React, { FC, useEffect, useState } from "react"
 import {
@@ -22,7 +23,6 @@ export const MarketplaceScreen: FC<DemoTabScreenProps<"Marketplace">> = function
 ) {
   const [data, setData] = useState([])
   const [refreshing, setRefreshing] = useState(false)
-  console.log(data)
 
   useEffect(() => {
     getEscrows()

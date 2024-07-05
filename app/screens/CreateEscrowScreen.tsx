@@ -1,12 +1,14 @@
-import React, { FC, useEffect } from "react"
-import { TextStyle, View, ViewStyle, Dimensions, ImageStyle } from "react-native"
-import { AutoImage, Button, Icon, Screen, Text, Toggle } from "../components"
-import { DemoTabScreenProps } from "../navigators/DemoNavigator"
-import { colors, spacing, typography } from "../theme"
-import { translate } from "../i18n"
-import SelectDropdown from "react-native-select-dropdown"
-import { TouchableOpacity } from "react-native-gesture-handler"
 import { api } from "app/services/api"
+import React, { FC, useEffect } from "react"
+import { Dimensions, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
+import { TouchableOpacity } from "react-native-gesture-handler"
+import Spinner from "react-native-loading-spinner-overlay"
+import SelectDropdown from "react-native-select-dropdown"
+
+import { AutoImage, Button, Icon, Screen, Text, Toggle } from "../components"
+import { translate } from "../i18n"
+import { DemoTabScreenProps } from "../navigators/DemoNavigator"
+import { colors, palette, spacing, typography } from "../theme"
 
 const coins = ["USDT", "ETC", "BTC", "BNB"]
 const options = ["Mercado Pago", "Transferencia bancaria"]
@@ -16,13 +18,13 @@ export const CreateEscrowScreen: FC<DemoTabScreenProps<"DemoDebug">> = function 
   _props,
 ) {
   const [escrowPrivate, setPrivate] = React.useState(false)
+  const [loading, setLoading] = React.useState(false)
   const [currencies, setCurrencies] = React.useState([])
-  const [sendCurrency, setSendCurrency] = React.useState([])
-  const [recieveCurrency, setRecieveCurrency] = React.useState([])
+  const [sendCurrency, setSendCurrency] = React.useState()
+  const [recieveCurrency, setRecieveCurrency] = React.useState()
   const [escrowPublic, setPublic] = React.useState(true)
   const { navigation } = _props
 
-  console.log(currencies)
   const checkPrivate = () => {
     setPrivate(true)
     setPublic(false)
@@ -43,16 +45,20 @@ export const CreateEscrowScreen: FC<DemoTabScreenProps<"DemoDebug">> = function 
 
   return (
     <Screen preset="scroll" safeAreaEdges={["top"]} contentContainerStyle={$container}>
+      <Spinner visible={loading} textContent={"Loading..."} />
       <AutoImage source={require("../../assets/images/logo.png")} style={$logo} />
       <View style={$itemsContainer}>
-        <Text tx="createEscrow.send" preset="h3" style={$title} />
+        <Text text="Enviar" preset="h3" style={$title} />
         <SelectDropdown
-          data={currencies}
-          defaultButtonText={translate("createEscrow.sendDropdownPlaceholder")}
+          data={currencies?.filter((currency) => currency !== recieveCurrency) || currencies}
+          defaultButtonText={"Presione para seleccionar una opción"}
+          buttonTextAfterSelection={(selectedItem) => <Text>{selectedItem.name}</Text>}
           buttonTextStyle={$dropdownText}
           buttonStyle={$dropdownButton}
-          buttonTextAfterSelection={(selectedItem) => <Text>{selectedItem.name}</Text>}
-          onSelect={(selectedItem, index) => {
+          rowStyle={$dropdownRow}
+          rowTextStyle={$dropdownRowText}
+          dropdownStyle={$dropdown}
+          onSelect={(selectedItem) => {
             setSendCurrency(selectedItem)
           }}
           renderDropdownIcon={() => (
@@ -62,14 +68,18 @@ export const CreateEscrowScreen: FC<DemoTabScreenProps<"DemoDebug">> = function 
             return item.name
           }}
         />
-        <Text tx="createEscrow.recieve" preset="h3" style={$title} />
+        <Text text="Recibir" preset="h3" style={$title} />
         <SelectDropdown
-          data={currencies}
-          defaultButtonText={translate("createEscrow.sendDropdownPlaceholder")}
+          data={currencies?.filter((currency) => currency !== sendCurrency) || currencies}
+          defaultButtonText={"Presione para seleccionar una opción"}
+          buttonTextAfterSelection={(selectedItem) => <Text>{selectedItem.name}</Text>}
           buttonTextStyle={$dropdownText}
           buttonStyle={$dropdownButton}
-          buttonTextAfterSelection={(selectedItem) => <Text>{selectedItem.name}</Text>}
+          rowStyle={$dropdownRow}
+          rowTextStyle={$dropdownRowText}
+          dropdownStyle={$dropdown}
           onSelect={(selectedItem) => {
+            console.log(selectedItem)
             setRecieveCurrency(selectedItem)
           }}
           renderDropdownIcon={() => (
@@ -97,11 +107,8 @@ No figurará en el Marketplace"
         <TouchableOpacity style={{ flexDirection: "row", gap: spacing.md }} onPress={checkPrivate}>
           <Toggle variant="radio" value={escrowPrivate} containerStyle={{ marginTop: 4 }} />
           <View>
-            <Text text="PRIVADO" size="h3" weight="medium" />
-            <Text
-              text="Ya tengo la contraparte.
-No figurará en el Marketplace"
-            />
+            <Text text="PÚBLICO" size="h3" weight="medium" />
+            <Text>No tengo la contraparte. {"\n"}Se listará en el Marketplace</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -112,18 +119,32 @@ No figurará en el Marketplace"
         <Button
           text="SIGUIENTE"
           preset="filled"
-          onPress={() =>
+          disabled={Boolean(!sendCurrency || !recieveCurrency)}
+          onPress={() => {
             navigation.navigate("CreateEscrow2", {
               isPrivate: escrowPrivate,
               sendCurrency,
               recieveCurrency,
             })
-          }
+          }}
           style={{ paddingVertical: 8 }}
         />
       </View>
     </Screen>
   )
+}
+const $dropdownRow: ViewStyle = {
+  justifyContent: "flex-start",
+  backgroundColor: palette.btn2,
+}
+const $dropdown: ViewStyle = { borderRadius: 10, backgroundColor: palette.btn2 }
+const $dropdownRowText: TextStyle = {
+  textAlign: "left",
+  color: palette.white,
+  fontFamily: typography.primary.semiBold,
+  fontSize: 14,
+  lineHeight: 21,
+  letterSpacing: 1.5,
 }
 
 const $container: ViewStyle = {

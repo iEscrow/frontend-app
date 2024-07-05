@@ -1,15 +1,17 @@
-import React, { FC, useEffect, useState } from "react"
-import { TextStyle, View, ViewStyle, Dimensions, ImageStyle, FlatList } from "react-native"
-import { AutoImage, Button, Icon, Screen, Text, TextField, Toggle } from "../components"
-import { DemoTabScreenProps } from "../navigators/DemoNavigator"
-import { colors, spacing, typography } from "../theme"
-import { translate } from "../i18n"
-import SelectDropdown from "react-native-select-dropdown"
-import { TouchableOpacity } from "react-native-gesture-handler"
+import Footer from "app/components/Footer"
 import MarketplaceCard from "app/components/MarketplaceCard"
 import MyEscrowCard from "app/components/MyEscrowCard"
 import escrows from "app/data/escrows"
 import Fuse from "fuse.js"
+import React, { FC, useEffect, useState } from "react"
+import { Dimensions, FlatList, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
+import { TouchableOpacity } from "react-native-gesture-handler"
+import SelectDropdown from "react-native-select-dropdown"
+
+import { AutoImage, Button, Icon, Screen, Text, TextField, Toggle } from "../components"
+import { translate } from "../i18n"
+import { DemoTabScreenProps } from "../navigators/DemoNavigator"
+import { colors, spacing, typography } from "../theme"
 
 const { width } = Dimensions.get("screen")
 
@@ -17,7 +19,6 @@ export const HelpCenterScreen: FC<DemoTabScreenProps<"HelpCenter">> = function H
   _props,
 ) {
   const { navigation } = _props
-  console.log(navigation)
   const [search, setSearch] = useState("")
   const [result, setResult] = useState([])
   const items = [
@@ -260,26 +261,12 @@ export const HelpCenterScreen: FC<DemoTabScreenProps<"HelpCenter">> = function H
     },
   ]
   const fuseOptions = {
-    // isCaseSensitive: false,
-    // includeScore: false,
-    // shouldSort: true,
-    // includeMatches: false,
-    // findAllMatches: false,
-    // minMatchCharLength: 1,
-    // location: 0,
-    // threshold: 0.6,
-    // distance: 100,
-    // useExtendedSearch: false,
-    // ignoreLocation: false,
-    // ignoreFieldNorm: false,
-    // fieldNormWeight: 1,
     keys: ["title", "sections.title"],
   }
   const fuse = new Fuse(items, fuseOptions)
   useEffect(() => {
     setResult(fuse.search(search))
   }, [search])
-  console.log(result)
   return (
     <Screen preset="scroll" safeAreaEdges={["top"]} contentContainerStyle={$container}>
       <AutoImage source={require("../../assets/images/logo.png")} style={$logo} />
@@ -311,12 +298,13 @@ export const HelpCenterScreen: FC<DemoTabScreenProps<"HelpCenter">> = function H
           ))
         : items.map((item, i) =>
             item?.label ? (
-            <Text
-            key={i}
+              <Text
+                key={i}
                 preset="h3"
                 style={{
                   marginBottom: spacing.lg,
-                  marginTop: spacing.lg, paddingHorizontal: 16
+                  marginTop: spacing.lg,
+                  paddingHorizontal: 16,
                 }}
               >
                 {item.label}
@@ -334,12 +322,13 @@ export const HelpCenterScreen: FC<DemoTabScreenProps<"HelpCenter">> = function H
               </TouchableOpacity>
             ),
           )}
+      <Footer />
     </Screen>
   )
 }
 
 const $container: ViewStyle = {
-  paddingBottom: spacing.xxl,
+  // paddingBottom: spacing.xxl,
 }
 
 const $item: ViewStyle = {

@@ -1,4 +1,4 @@
-import React, { ComponentType, forwardRef, Ref, useImperativeHandle, useRef,useState } from "react"
+import React, { ComponentType, forwardRef, Ref, useImperativeHandle, useRef, useState } from "react"
 import {
   StyleProp,
   TextInput,
@@ -8,8 +8,9 @@ import {
   View,
   ViewStyle,
 } from "react-native"
+
 import { isRTL, translate } from "../i18n"
-import { colors, spacing, typography } from "../theme"
+import { colors, spacing } from "../theme"
 import { Text, TextProps } from "./Text"
 
 export interface TextFieldAccessoryProps {
@@ -97,7 +98,6 @@ export interface TextFieldProps extends Omit<TextInputProps, "ref"> {
   LeftAccessory?: ComponentType<TextFieldAccessoryProps>
 }
 
-
 export const TextField = forwardRef(function TextField(props: TextFieldProps, ref: Ref<TextInput>) {
   const {
     labelTx,
@@ -122,7 +122,7 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
   const input = useRef<TextInput>()
 
   const disabled = TextInputProps.editable === false || status === "disabled"
-  const [isFocused, setIsFocused] = useState(false);
+  const [isFocused, setIsFocused] = useState(false)
   const placeholderContent = placeholderTx
     ? translate(placeholderTx, placeholderTxOptions)
     : placeholder
@@ -137,7 +137,10 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
     TextInputProps.multiline && { minHeight: 112 },
     LeftAccessory && { paddingStart: 0 },
     RightAccessory && { paddingEnd: 0 },
-    isFocused && {backgroundColor: colors.palette.inputBackgroundFocus, borderColor: colors.palette.primary400},
+    isFocused && {
+      backgroundColor: colors.palette.inputBackgroundFocus,
+      borderColor: colors.palette.primary400,
+    },
     $inputWrapperStyleOverride,
   ]
 
@@ -195,12 +198,11 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
           textAlignVertical="top"
           placeholder={placeholderContent}
           placeholderTextColor={colors.textDim}
-          
           {...TextInputProps}
           editable={!disabled}
           style={$inputStyles}
           onFocus={() => setIsFocused(true)}
-        onBlur={() => setIsFocused(false)}
+          onBlur={() => setIsFocused(false)}
         />
 
         {!!RightAccessory && (
@@ -248,7 +250,8 @@ const $inputStyle: TextStyle = {
   color: colors.text,
   lineHeight: 34,
   height: 34,
-  paddingTop: 0,
+  fontSize: 20,
+  paddingTop: 5,
   paddingHorizontal: 0,
   marginVertical: spacing.xs,
   marginHorizontal: spacing.sm,

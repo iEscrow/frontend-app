@@ -1,6 +1,8 @@
+import { api } from "app/services/api"
 import { observer } from "mobx-react-lite"
 import React, { FC, useEffect, useMemo, useRef, useState } from "react"
 import { Dimensions, ImageStyle, TextInput, TextStyle, ViewStyle } from "react-native"
+
 import {
   AutoImage,
   Button,
@@ -13,7 +15,6 @@ import {
 import { useStores } from "../models"
 import { AppStackScreenProps } from "../navigators"
 import { colors, spacing } from "../theme"
-import { api } from "app/services/api"
 
 const { width } = Dimensions.get("screen")
 
@@ -35,6 +36,7 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
       setAuthToken,
       validationEmailError,
       validationPasswordError,
+      setAuthUser,
     },
   } = useStores()
 
@@ -64,6 +66,7 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
         distributeAuthToken(response.data.token)
         setAuthEmail(response.data.user.email)
         setIsSubmitted(false)
+        setAuthUser(response.data.user)
       })
       .catch((error) => console.error(error))
   }

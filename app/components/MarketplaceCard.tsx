@@ -1,13 +1,12 @@
-import React from "react"
-import { ViewStyle, ImageStyle, TextStyle, View } from "react-native"
-
-import { Text } from "./Text"
-import { AutoImage } from "./AutoImage"
-import { colors, spacing } from "app/theme"
-import { TouchableOpacity } from "react-native-gesture-handler"
-import { api } from "app/services/api"
 import { navigate } from "app/navigators"
 import { escrowTransactions } from "app/screens"
+import { colors, spacing } from "app/theme"
+import React from "react"
+import { ImageStyle, TextStyle, View, ViewStyle } from "react-native"
+import { TouchableOpacity } from "react-native-gesture-handler"
+
+import { AutoImage } from "./AutoImage"
+import { Text } from "./Text"
 
 export default function MarketplaceCard(_props) {
   const { item } = _props
@@ -17,8 +16,6 @@ export default function MarketplaceCard(_props) {
   } = item
 
   const handleBuy = () => {
-    console.log("buy")
-
     navigate("BuyEscrow", item)
     /* api
       .buyEscrow(item.id)

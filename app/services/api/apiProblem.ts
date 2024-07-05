@@ -1,5 +1,4 @@
 import { ApiResponse } from "apisauce"
-import { useStores } from "app/models"
 
 export type GeneralApiProblem =
   /**

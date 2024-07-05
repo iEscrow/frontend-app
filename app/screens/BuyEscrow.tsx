@@ -3,7 +3,8 @@ import { goBack, navigate } from "app/navigators"
 import { DemoTabScreenProps } from "app/navigators/DemoNavigator"
 import { palette, spacing, typography } from "app/theme"
 import React, { FC } from "react"
-import { Text, ViewStyle, ImageStyle, Dimensions, TextStyle, View } from "react-native"
+import { Dimensions, ImageStyle, Text, TextStyle, View, ViewStyle } from "react-native"
+
 const { width } = Dimensions.get("screen")
 
 const escrowTypes = {
@@ -22,7 +23,6 @@ const BuyEscrow: FC<DemoTabScreenProps<"BuyEscrow">> = (props) => {
     route: { params },
   } = props
 
-  console.log(params)
   return (
     <Screen preset="fixed" safeAreaEdges={["top"]} contentContainerStyle={$container}>
       <AutoImage source={require("../../assets/images/logo.png")} style={$logo} />

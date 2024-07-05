@@ -24,7 +24,6 @@ run('npx pod-install')
 
 // Run baby run
 function run(command) {
-  console.log(`./bin/postInstall script running: ${command}`)
 
   try {
     require("child_process").execSync(command, { stdio: "inherit" })

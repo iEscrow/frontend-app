@@ -1,14 +1,11 @@
+import Footer from "app/components/Footer"
 import React, { FC, useState } from "react"
-import { TextStyle, View, ViewStyle, Dimensions, ImageStyle, FlatList } from "react-native"
-import { AutoImage, Button, Icon, Screen, Text, TextField, Toggle } from "../components"
-import { DemoTabScreenProps } from "../navigators/DemoNavigator"
-import { colors, spacing, typography } from "../theme"
-import { translate } from "../i18n"
-import SelectDropdown from "react-native-select-dropdown"
+import { Dimensions, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler"
-import MarketplaceCard from "app/components/MarketplaceCard"
-import MyEscrowCard from "app/components/MyEscrowCard"
-import escrows from "app/data/escrows"
+
+import { AutoImage, Screen, Text } from "../components"
+import { DemoTabScreenProps } from "../navigators/DemoNavigator"
+import { colors, spacing } from "../theme"
 
 const { width } = Dimensions.get("screen")
 
@@ -18,10 +15,8 @@ export const HelpSingleScreen: FC<DemoTabScreenProps<"HelpSingle">> = function H
   const { navigation, route } = _props
   const [scrollRef, setScrollRef] = useState(null)
   const [dataSourceCords, setDataSourceCords] = useState([])
-  console.log(route.params.title)
 
   const scrollHandler = (scrollToIndex) => {
-    console.log(scrollToIndex)
     if (dataSourceCords.length > scrollToIndex) {
       scrollRef.scrollTo({
         x: 0,
@@ -34,53 +29,61 @@ export const HelpSingleScreen: FC<DemoTabScreenProps<"HelpSingle">> = function H
   return (
     <Screen preset="fixed" safeAreaEdges={["top"]} contentContainerStyle={$container}>
       <TouchableOpacity
-          onPress={() => navigation.navigate("HelpCenter")}
-          style={{
-            flexDirection: "row",
-            gap: 8,
-            alignItems: "center",
-            marginTop: 24,
-            marginLeft: 8,
-          }}
-        >
-          <AutoImage
-            source={require("../../assets/icons/caretLeft.png")}
-            style={{ width: 24, height: 24, tintColor: "white" }}
-          />
+        onPress={() => navigation.navigate("HelpCenter")}
+        style={{
+          flexDirection: "row",
+          gap: 8,
+          alignItems: "center",
+          marginTop: 24,
+          marginLeft: 8,
+        }}
+      >
+        <AutoImage
+          source={require("../../assets/icons/caretLeft.png")}
+          style={{ width: 24, height: 24, tintColor: "white" }}
+        />
 
-          <Text preset="h4" style={{maxWidth: "65%"}}>{route?.params?.title}</Text>
-        </TouchableOpacity>
+        <Text preset="h4" style={{ maxWidth: "65%" }}>
+          {route?.params?.title}
+        </Text>
+      </TouchableOpacity>
       <ScrollView
         ref={(ref) => {
           setScrollRef(ref)
         }}
-        style={{paddingHorizontal: 16}}
       >
-        
-        <AutoImage source={require("../../assets/images/logo.png")} style={$logo} />
-        <View style={{marginTop: 16, marginBottom: 32}}>
-          
-        {route.params?.sections?.map((section, i) => (
-          <TouchableOpacity key={i} onPress={() => scrollHandler(i)} style={{marginBottom: 8}}>
-            <Text preset="h4">{section.title}</Text>
-          </TouchableOpacity>
-        ))}
-        </View>
-
-        {route.params?.sections?.map((section, i) => (
-          <View
-            key={i}
-            onLayout={(event) => {
-              const layout = event.nativeEvent.layout
-              dataSourceCords[i] = layout.y
-              setDataSourceCords(dataSourceCords)
-            }}
-            style={{marginBottom: 16}}
-          >
-            <Text preset="h4" style={{color: colors.palette.accent400, marginBottom: 4}}>{section.title}</Text>
-            <Text preset="h4">{section.description}</Text>
+        <View style={{ paddingHorizontal: 16 }}>
+          <AutoImage source={require("../../assets/images/logo.png")} style={$logo} />
+          <View style={{ marginTop: 16, marginBottom: 32 }}>
+            {route.params?.sections?.map((section, i) => (
+              <TouchableOpacity
+                key={i}
+                onPress={() => scrollHandler(i)}
+                style={{ marginBottom: 8 }}
+              >
+                <Text preset="h4">{section.title}</Text>
+              </TouchableOpacity>
+            ))}
           </View>
-        ))}
+
+          {route.params?.sections?.map((section, i) => (
+            <View
+              key={i}
+              onLayout={(event) => {
+                const layout = event.nativeEvent.layout
+                dataSourceCords[i] = layout.y
+                setDataSourceCords(dataSourceCords)
+              }}
+              style={{ marginBottom: 16 }}
+            >
+              <Text preset="h4" style={{ color: colors.palette.accent400, marginBottom: 4 }}>
+                {section.title}
+              </Text>
+              <Text preset="h4">{section.description}</Text>
+            </View>
+          ))}
+        </View>
+        <Footer />
       </ScrollView>
     </Screen>
   )

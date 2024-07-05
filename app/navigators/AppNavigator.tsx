@@ -1,3 +1,14 @@
+import { Icon } from "app/components"
+import CustomDrawerContent from "app/components/CustomDrawerContent"
+import * as Screens from "app/screens"
+import AddBankAccount from "app/screens/AddBankAccount"
+import BuyEscrow from "app/screens/BuyEscrow"
+import { colors } from "app/theme"
+import { observer } from "mobx-react-lite"
+import React from "react"
+import { useColorScheme, View } from "react-native"
+
+import { createDrawerNavigator } from "@react-navigation/drawer"
 /**
  * The app navigator (formerly "AppNavigator" and "MainNavigator") is used for the primary
  * navigation flows of your app.
@@ -10,21 +21,13 @@ import {
   NavigationContainer,
   NavigatorScreenParams,
 } from "@react-navigation/native"
-import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navigation/native-stack"
-import { observer } from "mobx-react-lite"
-import React from "react"
-import { useColorScheme } from "react-native"
-import * as Screens from "app/screens"
+import { NativeStackScreenProps } from "@react-navigation/native-stack"
+
 import Config from "../config"
 import { useStores } from "../models"
 import { DemoNavigator, DemoTabParamList } from "./DemoNavigator"
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
-import { colors } from "app/theme"
-import { createDrawerNavigator } from "@react-navigation/drawer"
-import CustomDrawerContent from "app/components/CustomDrawerContent"
-import { View } from "react-native"
-import { Icon } from "app/components"
-import BuyEscrow from "app/screens/BuyEscrow"
+
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
  * as well as what properties (if any) they might take when navigating to them.
@@ -43,6 +46,7 @@ export type AppStackParamList = {
   CreateEscrow: undefined
   MyEscrows: NavigatorScreenParams<DemoTabParamList>
   BuyEscrow: undefined
+  AddBankAccount: undefined
 }
 
 /**
@@ -63,6 +67,7 @@ const AppStack = observer(function AppStack() {
   const {
     authenticationStore: { isAuthenticated },
   } = useStores()
+  console.log("isAuthenticated", isAuthenticated)
   const defaultOptions = ({ navigation }) => ({
     headerShown: true,
     headerTitle: "",
@@ -117,6 +122,7 @@ const AppStack = observer(function AppStack() {
           <Drawer.Screen name="CreateEscrow2" component={Screens.CreateEscrow2Screen} />
           <Drawer.Screen name="EscrowCreated" component={Screens.EscrowCreatedScreen} />
           <Drawer.Screen name="BuyEscrow" component={BuyEscrow} />
+          <Drawer.Screen name="AddBankAccount" component={AddBankAccount} />
         </>
       ) : (
         <>

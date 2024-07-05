@@ -43,9 +43,8 @@ interface IconProps extends TouchableOpacityProps {
    */
   onPress?: TouchableOpacityProps["onPress"]
 
-  gradient?: boolean 
+  gradient?: boolean
 }
-
 
 export function Icon(props: IconProps) {
   const {
@@ -105,12 +104,12 @@ export const iconRegistry = {
   slack: require("../../assets/icons/slack.png"),
   view: require("../../assets/icons/view.png"),
   x: require("../../assets/icons/x.png"),
-  marketplace: require('../../assets/icons/marketplace.png'),
-  marketplaceActive: require('../../assets/icons/marketplace-active.png'),
-  createEscrow: require('../../assets/icons/create-escrow.png'),
-  createEscrowActive: require('../../assets/icons/create-escrow-active.png'),
-  myEscrows: require('../../assets/icons/my-escrows.png'),
-  myEscrowsActive: require('../../assets/icons/my-escrows-active.png'),
+  marketplace: require("../../assets/icons/marketplace.png"),
+  marketplaceActive: require("../../assets/icons/marketplace-active.png"),
+  createEscrow: require("../../assets/icons/create-escrow.png"),
+  createEscrowActive: require("../../assets/icons/create-escrow-active.png"),
+  myEscrows: require("../../assets/icons/my-escrows.png"),
+  myEscrowsActive: require("../../assets/icons/my-escrows-active.png"),
   dropdown: require("../../assets/icons/dropdown-arrow.png"),
   profile: require("../../assets/icons/profile.png"),
   details: require("../../assets/icons/details.png"),
@@ -128,7 +127,13 @@ export const iconRegistry = {
   chat_9: require("../../assets/icons/chat-9.png"),
   chat_0: require("../../assets/icons/chat-0.png"),
   chat_more: require("../../assets/icons/chat-more.png"),
-  sendMessage: require("../../assets/icons/sendMessage.png")
+  sendMessage: require("../../assets/icons/sendMessage.png"),
+  facebook: require("../../assets/icons/facebook.png"),
+  twitter: require("../../assets/icons/twitter.png"),
+  instagram: require("../../assets/icons/instagram.png"),
+  tiktok: require("../../assets/icons/tiktok.png"),
+  youtube: require("../../assets/icons/youtube.png"),
+  telegram: require("../../assets/icons/telegram.png"),
 }
 
 const $imageStyle: ImageStyle = {
